@@ -1,15 +1,3 @@
-
-
-function MyComponent() {
-  return (
-    <Image
-      src="/images/profile.jpg"
-      alt="Profile picture"
-      width={500}
-      height={500}
-    />
-  )
-}
 import React from 'react'
 import { motion } from 'framer-motion'
 import styled, { createGlobalStyle } from 'styled-components'
