@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@zegocloud/zego-uikit-prebuilt": "^2.8.1",
+    "framer-motion": "^11.3.31",
+    "lucide-react": "^0.438.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",

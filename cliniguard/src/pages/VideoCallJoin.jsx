@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const VideoCallJoin = () => {
     const navigate=useNavigate();
-  const[roomId,setRoomId]=useState(null);
+  const[roomId,setRoomId]=useState("");
  const handleJoinRoom =useCallback(()=>{
     navigate(`/call/${roomId}`);
 

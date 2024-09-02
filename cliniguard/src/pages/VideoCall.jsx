@@ -34,6 +34,8 @@ const VideoCall = () => {
              showPinButton: true,
              turnOnMicrophoneWhenJoining: false,
              turnOnCameraWhenJoining: false,
+           
+
               
              //functions
              onJoinRoom: () => {console.log("Successfully Joined")}, // This will be triggered when you join the room. 
