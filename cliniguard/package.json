@@ -10,16 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.17.1",
     "@gsap/react": "^2.1.1",
     "@shadcn/ui": "^0.0.4",
     "express": "^4.19.2",
+    "framer-motion": "^11.5.2",
     "gsap": "^3.12.5",
     "lucide-react": "^0.438.0",
     "mongoose": "^8.6.0",
     "node-fetch": "^3.3.2",
     "openai": "^4.57.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
+    "styled-components": "^6.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
