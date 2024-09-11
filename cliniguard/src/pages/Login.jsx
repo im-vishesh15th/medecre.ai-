@@ -1,21 +1,41 @@
-import * as React from "react"
+import * as React from "react";
+import { HealthContext } from "../context/HealthContext";
+import { useNavigate } from "react-router-dom";
 
 const PulseIcon = () => (
   <svg className="w-16 h-16 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
   </svg>
-)
-
+);
 export default function Login() {
-  const [isLogin, setIsLogin] = React.useState(true)
-  const [role, setRole] = React.useState("patient")
+  const [isLogin, setIsLogin] = React.useState(true);
+  const [formData, setFormData] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "patient",
+  });
+
+  const { login, register } = React.useContext(HealthContext);
+  const navigate = useNavigate(); // Initialize navigate
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    // Handle form submission logic here
-    console.log("Form submitted", { isLogin, role })
-  }
-
+    event.preventDefault();
+    if (isLogin) {
+      login(formData.email, formData.password).then(() => {
+        navigate("/");
+      })
+    } else {
+      register(formData.name, formData.email, formData.password);
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated background elements */}
@@ -52,7 +72,7 @@ export default function Login() {
           <button
             onClick={() => setIsLogin(true)}
             className={`px-6 py-2 rounded-full transition-all duration-300 text-lg font-medium ${
-              isLogin ? 'bg-teal-600 text-white shadow-lg' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              isLogin ? "bg-teal-600 text-white shadow-lg" : "bg-gray-700 text-gray-300 hover:bg-gray-600"
             }`}
           >
             Login
@@ -60,7 +80,7 @@ export default function Login() {
           <button
             onClick={() => setIsLogin(false)}
             className={`px-6 py-2 rounded-full transition-all duration-300 text-lg font-medium ${
-              !isLogin ? 'bg-teal-600 text-white shadow-lg' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              !isLogin ? "bg-teal-600 text-white shadow-lg" : "bg-gray-700 text-gray-300 hover:bg-gray-600"
             }`}
           >
             Register
@@ -82,38 +102,29 @@ export default function Login() {
                     required
                     className="appearance-none rounded-t-md relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm"
                     placeholder="Full Name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    className="appearance-none rounded-b-md relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm"
-                    placeholder="Email address"
+                    value={formData.name}
+                    onChange={handleChange}
                   />
                 </div>
               </>
             )}
-            {isLogin && (
-              <div>
-                <label htmlFor="username" className="sr-only">
-                  Username
-                </label>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  required
-                  className="appearance-none rounded-t-md relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm"
-                  placeholder="Username"
-                />
-              </div>
-            )}
+            <div>
+              <label htmlFor="email" className="sr-only">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className={`appearance-none ${
+                  isLogin ? "rounded-t-md" : "rounded-md"
+                } relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm`}
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
             <div>
               <label htmlFor="password" className="sr-only">
                 Password
@@ -123,29 +134,34 @@ export default function Login() {
                 name="password"
                 type="password"
                 required
-                className={`appearance-none ${isLogin ? 'rounded-b-md' : 'rounded-md'} relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm`}
+                className={`appearance-none ${
+                  isLogin ? "rounded-b-md" : "rounded-md"
+                } relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm`}
                 placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <label htmlFor="role" className="sr-only">
+          {!isLogin && (
+            <div className="my-4">
+              <label htmlFor="role" className="block text-sm font-medium text-white">
                 Select Role
               </label>
               <select
                 id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm rounded-md"
+                name="role"
+                className="mt-1 block w-full px-3 py-2 bg-gray-900 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm rounded-md"
+                value={formData.role}
+                onChange={handleChange}
               >
                 <option value="patient">Patient</option>
                 <option value="doctor">Doctor</option>
                 <option value="superadmin">Super Admin</option>
               </select>
             </div>
-          </div>
+          )}
 
           <div>
             <button
@@ -171,5 +187,5 @@ export default function Login() {
         )}
       </div>
     </div>
-  )
+  );
 }

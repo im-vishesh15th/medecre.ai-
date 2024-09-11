@@ -1,23 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { HeartPulse } from 'lucide-react';
 import './Navbar.css';
-import Login from '../pages/Login';
-import ComprehensiveAppointmentPage from './Appoitment';
-
+import { HealthContext } from '../context/HealthContext';
 
 export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
 
+  const { loginDetails, logout } = useContext(HealthContext);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY.current) {
-        // Scrolling down
         setIsVisible(false);
       } else {
-        // Scrolling up
         setIsVisible(true);
       }
       lastScrollY.current = window.scrollY;
@@ -44,10 +41,18 @@ export default function Navbar() {
         ))}
       </nav>
       <div className="navbar-actions">
-        <Link to="/Login" ><button className="navbar-action-button login-button">Login</button></Link>
-        <Link to='/ComprehensiveAppointmentPage'><button className="navbar-action-button appointment-button">Appointment</button>
+        {loginDetails.isLogged ? (
+          <button className="navbar-action-button" onClick={logout}>
+           {`HI,${loginDetails.userName}`}
+          </button>
+        ) : (
+          <Link to="/Login">
+            <button className="navbar-action-button login-button">Login</button>
+          </Link>
+        )}
+        <Link to='/ComprehensiveAppointmentPage'>
+          <button className="navbar-action-button appointment-button">Appointment</button>
         </Link>
-        
       </div>
     </header>
   );

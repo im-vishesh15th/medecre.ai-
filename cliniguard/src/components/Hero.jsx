@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ArrowRight, Image } from "lucide-react";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from '../pages/Login';
 import PatientDeshboard from './PatientDeshboard';
+import { HealthContext } from '../context/HealthContext';
+import HealthAssessmentForm from './HealthForm';
 
 
 
 const Hero = () => {
-  const [Login, setLogin] = useState(false)
+  const { loginDetails, logout } = useContext(HealthContext);
+  
 
   return (
     <section className="h-screen flex items-center bg-gray-900 text-gray-100">
@@ -20,7 +23,7 @@ const Hero = () => {
             CliniGuard: A comprehensive web application to empower healthcare providers, 
             enhance patient care, and streamline your entire clinical workflow.
           </p>
-         <Link to={Login?'/PatientDeshboard':'/Login'} > <button className="bg-teal-400 text-gray-900 px-4 py-2 font-bold flex items-center gap-2 rounded hover:bg-teal-300">
+         <Link to={loginDetails.isLogged?'/HealthAssessmentForm':'/Login'} > <button className="bg-teal-400 text-gray-900 px-4 py-2 font-bold flex items-center gap-2 rounded hover:bg-teal-300">
             Get Started <ArrowRight size={16} />
           </button></Link>
         </div>

@@ -1,5 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { ChevronRight, AlertTriangle, User, MapPin, Phone, Mail, Calendar } from 'lucide-react'
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  ChevronRight,
+  AlertTriangle,
+  User,
+  MapPin,
+  Phone,
+  Mail,
+  Calendar
+} from 'lucide-react';
+import { HealthContext } from '../context/HealthContext';
 
 const styles = {
   container: {
@@ -44,6 +53,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
+    width:'50%',
+    margin:"auto",
+    textAlign:"center",
+    marginTop:"20px",
   },
   inputGroup: {
     display: 'flex',
@@ -62,6 +75,7 @@ const styles = {
     border: 'none',
     fontSize: '16px',
     outline: 'none',
+    width:'100%'
   },
   button: {
     padding: '15px 30px',
@@ -89,6 +103,22 @@ const styles = {
     backgroundColor: '#4a90e2',
     color: 'white',
   },
+  symptomsContainer: {
+    height: '300px',
+    overflowY: 'scroll',
+    border: '1px solid #4a90e2',
+    borderRadius: '10px',
+    padding: '10px',
+    backgroundColor: 'white',
+  },
+  
+  error: {
+    color: '#e74c3c',
+    marginTop: '10px',
+    fontWeight: 'bold',
+  },
+  
+  
   suggestionBox: {
     backgroundColor: 'white',
     border: '1px solid #4a90e2',
@@ -96,27 +126,81 @@ const styles = {
     padding: '20px',
     marginTop: '30px',
     boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    position: 'relative',
+    overflow: 'hidden',
   },
-  error: {
-    color: '#e74c3c',
-    marginTop: '10px',
+  roundIndicatorContainer: {
+    position: 'absolute',
+    right: '20px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    width: '80px',
+    height: '80px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  roundIndicator: (accuracy) => ({
+    width: '60px',
+    height: '60px',
+    borderRadius: '50%',
+    background: `conic-gradient(#4a90e2 ${accuracy}%, #ddd ${accuracy}% 100%)`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '18px',
+    color: 'white',
+  }),
+  roundIndicatorText: {
+    fontSize: '20px',
     fontWeight: 'bold',
   },
-}
-
-const predefinedSymptoms = [
-  { id: 1, name: 'Fever' },
-  { id: 2, name: 'Cough' },
-  { id: 3, name: 'Headache' },
-  { id: 4, name: 'Fatigue' },
-  { id: 5, name: 'Shortness of breath' },
-  { id: 6, name: 'Nausea' },
-  { id: 7, name: 'Dizziness' },
-  { id: 8, name: 'Chest pain' },
-]
+  diseaseBox: {
+    backgroundColor: 'white',
+    border: '1px solid #4a90e2',
+    borderRadius: '10px',
+    padding: '20px',
+    marginBottom: '20px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  specialisationList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: '10px 0 0 0',
+    fontSize: '16px',
+    color: '#555',
+  },
+  specialisationItem: {
+    marginBottom: '5px',
+  },
+  actionButtonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '20px',
+  },
+  actionButton: {
+    padding: '15px 30px',
+    fontSize: '18px',
+    backgroundColor: '#4a90e2',
+    color: 'white',
+    border: 'none',
+    borderRadius: '10px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  videoCallButton: {
+    backgroundColor: '#e67e22',
+  },
+};
 
 export default function ComprehensiveAppointmentPage() {
-  const [step, setStep] = useState(0)
+  const { symptoms, predictedDiseases, fetchDiseasePrediction, loading } = useContext(HealthContext);
+  const [step, setStep] = useState(0);
   const [patientDetails, setPatientDetails] = useState({
     name: '',
     age: '',
@@ -124,80 +208,89 @@ export default function ComprehensiveAppointmentPage() {
     address: '',
     phone: '',
     email: '',
-    dob: '',
-  })
-  const [selectedSymptoms, setSelectedSymptoms] = useState([])
-  const [symptomDescription, setSymptomDescription] = useState('')
-  const [diseaseSuggestions, setDiseaseSuggestions] = useState([])
-  const [severity, setSeverity] = useState('')
-  const [error, setError] = useState('')
+  });
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  const [symptomDescription, setSymptomDescription] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchDiseaseSuggestions = async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      const suggestions = ['Common Cold', 'Flu', 'Allergies', 'COVID-19', 'Pneumonia', 'Migraine', 'Gastroenteritis']
-      setDiseaseSuggestions(suggestions.sort(() => 0.5 - Math.random()).slice(0, 3))
+    if (step === 4 && selectedSymptoms.length > 0) {
+      fetchDiseasePrediction(selectedSymptoms, patientDetails.sex,2004);
     }
-
-    if (step > 0) {
-      fetchDiseaseSuggestions()
-    }
-  }, [step])
+  }, [step]);
 
   const handleEmergencyBooking = () => {
-    alert('Initiating emergency appointment process. Please stand by for immediate assistance.')
-  }
+    alert('Initiating emergency appointment process. Please stand by for immediate assistance.');
+  };
 
   const handlePatientDetailsSubmit = (e) => {
-    e.preventDefault()
-    const requiredFields = ['name', 'age', 'sex', 'phone', 'email']
-    const missingFields = requiredFields.filter(field => !patientDetails[field])
+    e.preventDefault();
+    const requiredFields = ['name', 'age', 'sex', 'phone', 'email'];
+    const missingFields = requiredFields.filter(field => !patientDetails[field]);
     if (missingFields.length > 0) {
-      setError(`Please fill in the following required fields: ${missingFields.join(', ')}`)
-      return
+      setError(`Please fill in the following required fields: ${missingFields.join(', ')}`);
+      return;
     }
-    setError('')
-    setStep(2)
-  }
+    setError('');
+    setStep(2);
+  };
 
   const handleSymptomSelection = (symptomId) => {
-    setSelectedSymptoms(prev => 
-      prev.includes(symptomId) 
+    setSelectedSymptoms(prev =>
+      prev.includes(symptomId)
         ? prev.filter(id => id !== symptomId)
         : [...prev, symptomId]
-    )
-  }
+    );
+  };
 
   const handleSymptomDescriptionSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (selectedSymptoms.length === 0 && !symptomDescription) {
-      setError('Please select symptoms or describe your condition')
-      return
+      setError('Please select symptoms or describe your condition');
+      return;
     }
-    setError('')
-    setStep(4)
-    setTimeout(() => {
-      const randomSeverity = Math.random()
-      if (randomSeverity < 0.3) {
-        setSeverity('normal')
-      } else if (randomSeverity < 0.7) {
-        setSeverity('mild')
-      } else {
-        setSeverity('serious')
-      }
-      setStep(5)
-    }, 2000)
-  }
+    setError('');
+    setStep(4);
+  };
+
+  const handleBookAppointment = () => {
+    alert('Booking an appointment...');
+  };
+
+  const handleApplyVideoCall = () => {
+    alert('Applying for a video call...');
+  };
 
   const renderStep = () => {
+    const renderBackButton = step > 0 && (
+      <button
+        style={{  padding: '15px 30px',
+          fontSize: '18px',
+          backgroundColor: '#4a90e2',
+          color: 'white',
+          border: 'none',
+          borderRadius: '10px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width:'50%',
+          margin:'auto'
+        }}
+        onClick={() => setStep(step - 1)}
+      >
+        Back
+      </button>
+    );
     switch (step) {
-      case 0:
+      case 0: // Welcome Page
         return (
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
             height: 'calc(100vh - 100px)',
             textAlign: 'center',
             backgroundImage: 'url(/placeholder.svg?height=400&width=800)',
@@ -210,12 +303,12 @@ export default function ComprehensiveAppointmentPage() {
             <p style={{ fontSize: '1.2rem', maxWidth: '600px', marginBottom: '40px' }}>
               Your health is our priority. Whether you need a routine check-up or urgent care, we're here to help.
             </p>
-            <button style={{...styles.button, fontSize: '1.2rem'}} onClick={() => setStep(1)}>
-              Start Appointment Process <ChevronRight size={24} />
-            </button>
+            <button style={styles.button} onClick={() => setStep(1)}>Start Booking</button>
           </div>
-        )
-      case 1:
+        );
+
+
+        case 1: // Patient Details Page
         return (
           <form onSubmit={handlePatientDetailsSubmit} style={styles.form}>
             <h2>Patient Details</h2>
@@ -244,7 +337,7 @@ export default function ComprehensiveAppointmentPage() {
               <select
                 value={patientDetails.sex}
                 onChange={(e) => setPatientDetails({ ...patientDetails, sex: e.target.value })}
-                style={{...styles.input, backgroundColor: 'transparent'}}
+                style={{ ...styles.input, backgroundColor: 'transparent' }}
               >
                 <option value="">Select Sex</option>
                 <option value="male">Male</option>
@@ -282,116 +375,119 @@ export default function ComprehensiveAppointmentPage() {
                 style={styles.input}
               />
             </div>
-            <button type="submit" style={styles.button}>Next <ChevronRight size={24} /></button>
             {error && <div style={styles.error}>{error}</div>}
+            
+            <button type="submit" style={styles.button}>Continue to Symptoms Selection</button>
+            {renderBackButton}
           </form>
-        )
-      case 2:
+        );
+
+        case 2: // Symptom Selection Page
         return (
-          <div>
+          <div style={styles.content}>
             <h2>Select Your Symptoms</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {predefinedSymptoms.map(symptom => (
+            <div style={styles.symptomsContainer}>
+              {symptoms.map((symptom) => (
                 <button
-                  key={symptom.id}
-                  onClick={() => handleSymptomSelection(symptom.id)}
+                  key={symptom.ID}
                   style={{
                     ...styles.symptomButton,
-                    ...(selectedSymptoms.includes(symptom.id) ? styles.selectedSymptom : {}),
+                    ...(selectedSymptoms.includes(symptom.ID) ? styles.selectedSymptom : {}),
                   }}
+                  onClick={() => handleSymptomSelection(symptom.ID)}
                 >
-                  {symptom.name}
+                  {symptom.Name}
                 </button>
               ))}
             </div>
-            <h2>Or Describe Your Condition</h2>
-            <form onSubmit={handleSymptomDescriptionSubmit} style={styles.form}>
-              <textarea
-                placeholder="Describe your symptoms here"
-                value={symptomDescription}
-                onChange={(e) => setSymptomDescription(e.target.value)}
-                rows="4"
-                style={{
-                  padding: '10px',
-                  borderRadius: '10px',
-                  border: '1px solid #ddd',
-                  fontSize: '16px',
-                }}
-              />
-              <button type="submit" style={styles.button}>Submit Symptoms <ChevronRight size={24} /></button>
-            </form>
-            {error && <div style={styles.error}>{error}</div>}
-          </div>
-        )
-      case 3:
-        return (
-          <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h2>Please Wait</h2>
-            <p>We are analyzing your symptoms to suggest possible conditions...</p>
-          </div>
-        )
-      case 4:
-        return (
-          <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h2>Disease Suggestions</h2>
-            <div style={styles.suggestionBox}>
-              <p>Based on your symptoms, you might have:</p>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                {diseaseSuggestions.map((disease, index) => (
-                  <li key={index} style={{ margin: '10px 0', fontSize: '18px' }}>{disease}</li>
-                ))}
-              </ul>
-              <p>Please consult a healthcare provider for a definitive diagnosis.</p>
+            <div style={{ marginTop: '20px' }}>
+              <button style={styles.button} onClick={() => setStep(3)}>Next</button>
+              {renderBackButton}
             </div>
           </div>
-        )
-      case 5:
+        );
+      case 3: // Symptom Description Page
         return (
-          <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            {severity === 'serious' ? (
-              <div style={{ ...styles.suggestionBox, backgroundColor: '#fdecea' }}>
-                <AlertTriangle style={{ color: '#e74c3c', marginBottom: '10px' }} />
-                <h2>Urgent Attention Required</h2>
-                <p>Your symptoms indicate a potentially serious condition.</p>
-                <button style={{...styles.button, backgroundColor: '#e74c3c'}} onClick={() => alert('Redirecting to emergency services.')}>
-                  Seek Immediate Help
-                </button>
-              </div>
-            ) : severity === 'mild' ? (
-              <div style={{ ...styles.suggestionBox, backgroundColor: '#fff3cd' }}>
-                <h2>Consult a Doctor</h2>
-                <p>Your symptoms suggest a condition that should be evaluated by a healthcare professional soon.</p>
-                <button style={styles.button} onClick={() => alert('Booking a consultation.')}>
-                  Book a Consultation
-                </button>
-              </div>
-            ) : (
-              <div style={{ ...styles.suggestionBox, backgroundColor: '#d4edda' }}>
-                <h2>Low Severity</h2>
-                <p>Your symptoms do not indicate any serious conditions at the moment.</p>
-                <button style={styles.button} onClick={() => alert('Schedule a check-up.')}>
-                  Schedule a Check-Up
-                </button>
-              </div>
-            )}
+          <div style={styles.content}>
+            <h2>Describe Your Symptoms</h2>
+            <textarea
+              rows="6"
+              placeholder="Describe your symptoms or condition in detail..."
+              style={styles.input}
+              value={symptomDescription}
+              onChange={(e) => setSymptomDescription(e.target.value)}
+            />
+            {error && <p style={styles.error}>{error}</p>}
+            <div style={{ marginTop: '20px' }}>
+              <button style={styles.button} onClick={handleSymptomDescriptionSubmit}>Next</button>
+              {renderBackButton}
+            </div>
           </div>
-        )
+        );
+        case 4: // Disease Prediction Page
+        return (
+          <div style={{ textAlign: 'center', marginTop: '50px', width:'50%', margin:'auto' }}>
+      <h2>Disease Suggestions</h2>
+      {loading ? (
+        <p>Loading disease predictions...</p>
+      ) : predictedDiseases?.length > 0 ? (
+        <div style={styles.suggestionBox }>
+          <p>Based on your symptoms, you might have:</p>
+          {predictedDiseases.map((disease, index) => (
+            <div key={index} style={styles.diseaseBox}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                <div style={styles.roundIndicatorContainer}>
+                  <div style={styles.roundIndicator(disease.Issue.Accuracy)}>
+                    <span style={styles.roundIndicatorText}>
+                      {disease.Issue.Accuracy.toFixed(0)}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <strong>{disease.Issue.Name}</strong>
+                </div>
+              </div>
+              <ul style={styles.specialisationList}>
+                {disease.Specialisation.map((specialist, specIndex) => (
+                  <li key={specIndex} style={styles.specialisationItem}>
+                    Specialization: {specialist.Name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <p>Please consult a healthcare provider for a definitive diagnosis.</p>
+          <div style={styles.actionButtonContainer}>
+            <button style={styles.actionButton} onClick={handleBookAppointment}>
+              Book Appointment
+            </button>
+            <button style={{ ...styles.actionButton, ...styles.videoCallButton }} onClick={handleApplyVideoCall}>
+              Apply for Video Call
+            </button>
+          </div>
+        </div>
+      ) : (
+        <p>No diseases could be predicted based on the selected symptoms.
+          {renderBackButton}
+        </p>
+
+      )}
+    </div>
+        );
       default:
-        return null
+        return <div>Invalid step</div>;
     }
-  }
+  };
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
         <h1>Medical Appointment System</h1>
         <button style={styles.emergencyButton} onClick={handleEmergencyBooking}>
-          <AlertTriangle size={32} />
+          <AlertTriangle size={24} />
         </button>
       </header>
-      <main style={styles.content}>
-        {renderStep()}
-      </main>
+      {renderStep()}
     </div>
-  )
+  );
 }
