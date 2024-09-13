@@ -1,11 +1,17 @@
-'use client'
 
-import React, { useState, useEffect } from 'react'
+
+import React, { useState, useEffect, useContext } from 'react'
 import { Heart, Activity, Apple, Cigarette, Beer, Moon, Sun, Thermometer, Droplets } from 'lucide-react'
 import './HealthForm.css'
+import { HealthContext} from '../context/HealthContext'
+import { useNavigate } from "react-router-dom";
+import PatientDeshboard from './PatientDeshboard';
+
 
 
 const HealthAssessmentForm = () => {
+  const navigate = useNavigate();
+  const {fillform,setfillform } = useContext(HealthContext);
  
   const [formData, setFormData] = useState({
     // Basic Information
@@ -75,9 +81,15 @@ const HealthAssessmentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Submitted health data:', formData)
+    setfillform(true);
+    localStorage.setItem('fillform',1);
+    navigate("/PatientDeshboard");
+    console.log(fillform)
+
   }
 
   return (
+    
     <form onSubmit={handleSubmit} className="health-assessment-form">
       <div className="card">
         <div className="card-header">
@@ -322,6 +334,7 @@ const HealthAssessmentForm = () => {
         </div>
       </div>
     </form>
+  
   )
 }
 

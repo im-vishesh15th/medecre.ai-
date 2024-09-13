@@ -1,8 +1,8 @@
 :root {
-    --primary-color: #3b82f6;
+    --primary-color: #4fd1c5;
     --primary-dark: #2563eb;
-    --secondary-color: #e2e8f0;
-    --text-color: #1e293b;
+    --secondary-color: rgb(17,24,39,1);
+    --text-color: black;
     --background-color: #ffffff;
     --error-color: #ef4444;
     --success-color: #22c55e;
@@ -12,6 +12,28 @@
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: var(--secondary-color);
+  }
+  .afterfill{
+    font-size: 30px;
+    color: white;
+    border: 2px solid white;
+    height: 100px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+  }.spantext{
+    font-size: 15px;
+  }
+
+  .maindiv{
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .health-assessment-form {
@@ -38,7 +60,7 @@
   
   .card-header {
     background-color: var(--primary-color);
-    color: white;
+    color: black;
     padding: 20px;
     text-align: center;
     line-height: 30px; 
@@ -153,7 +175,7 @@
   }
   
   .card-footer {
-    background-color: var(--secondary-color);
+    background-color: white;
     padding: 10px 20px 40px 20px;
     text-align: center;
     height: 80px; 
@@ -184,7 +206,7 @@
     width: 100%;
     padding: 10px;
     background-color: var(--primary-color);
-    color: white;
+    color: black;
     border: none;
     border-radius: 4px;
     font-size: 16px;

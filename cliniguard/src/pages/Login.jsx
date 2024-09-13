@@ -33,7 +33,7 @@ export default function Login() {
         navigate("/");
       })
     } else {
-      register(formData.name, formData.email, formData.password);
+      register(formData.name, formData.email, formData.password,formData.role);
     }
   };
   return (

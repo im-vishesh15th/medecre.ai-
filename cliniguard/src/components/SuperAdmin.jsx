@@ -49,18 +49,17 @@ export default function SuperAdminDashboard() {
   const [activeTab, setActiveTab] = useState('Patients')
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-primary text-primary-foreground">
+    <div className="flex h-screen bg-gray-900 text-gray-100">
+      <aside className="w-64 bg-gray-800">
         <div className="p-4">
-          <h1 className="text-2xl font-bold">MediConnect</h1>
+          <h1 className="text-2xl font-bold text-gray-100">MediConnect</h1>
         </div>
         <nav className="mt-8">
           {sidebarItems.map((item, index) => (
             <button
               key={index}
               className={`flex items-center w-full px-4 py-3 text-left ${
-                activeTab === item.label ? 'bg-primary-foreground text-primary' : 'hover:bg-primary-foreground/10'
+                activeTab === item.label ? 'bg-gray-700 text-white' : 'hover:bg-gray-700 text-gray-300'
               }`}
               onClick={() => setActiveTab(item.label)}
             >
@@ -74,7 +73,7 @@ export default function SuperAdminDashboard() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
         {/* Header */}
-        <header className="bg-white shadow-sm">
+        <header className="bg-gray-800">
           <div className="flex items-center justify-between px-6 py-4">
             <h2 className="text-2xl font-semibold">{activeTab}</h2>
             <div className="flex items-center space-x-4">
@@ -82,21 +81,19 @@ export default function SuperAdminDashboard() {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="pl-10 pr-4 py-2 border rounded-full"
+                  className="pl-10 pr-4 py-2 border border-gray-600 bg-gray-900 rounded-full text-gray-300"
                 />
-                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
               </div>
-              <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
-                <Bell className="h-5 w-5" />
+              <button className="p-2 rounded-full bg-gray-700 hover:bg-gray-600">
+                <Bell className="h-5 w-5 text-gray-300" />
               </button>
               <div className="relative">
                 <button className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                    <User className="h-5 w-5" />
+                  <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
+                    <User className="h-5 w-5 text-gray-300" />
                   </div>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-4 w-4 text-gray-300" />
                 </button>
-                {/* Dropdown menu would go here */}
               </div>
             </div>
           </div>
@@ -108,22 +105,22 @@ export default function SuperAdminDashboard() {
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-semibold">Patient List</h3>
-                <button className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                <button className="flex items-center px-4 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
                   <PlusCircle className="mr-2 h-5 w-5" />
                   Add Patient
                 </button>
               </div>
-              <div className="bg-white shadow rounded-lg overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+              <div className="bg-gray-800 shadow rounded-lg overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Visit</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Next Appointment</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Age</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Last Visit</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Next Appointment</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-gray-800 divide-y divide-gray-700">
                     {patients.map((patient) => (
                       <tr key={patient.id}>
                         <td className="px-6 py-4 whitespace-nowrap">{patient.name}</td>
@@ -142,22 +139,22 @@ export default function SuperAdminDashboard() {
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-semibold">Upcoming Appointments</h3>
-                <button className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                <button className="flex items-center px-4 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
                   <PlusCircle className="mr-2 h-5 w-5" />
                   Schedule Appointment
                 </button>
               </div>
-              <div className="bg-white shadow rounded-lg overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+              <div className="bg-gray-800 shadow rounded-lg overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Patient Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Time</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Type</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-gray-800 divide-y divide-gray-700">
                     {appointments.map((appointment) => (
                       <tr key={appointment.id}>
                         <td className="px-6 py-4 whitespace-nowrap">{appointment.patientName}</td>
@@ -175,22 +172,22 @@ export default function SuperAdminDashboard() {
           {activeTab === 'Medicines' && (
             <div>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold">Medicine Inventory</h3>
-                <button className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                <h3 className="text-xl font-semibold">Available Medicines</h3>
+                <button className="flex items-center px-4 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
                   <PlusCircle className="mr-2 h-5 w-5" />
                   Add Medicine
                 </button>
               </div>
-              <div className="bg-white shadow rounded-lg overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+              <div className="bg-gray-800 shadow rounded-lg overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Type</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Stock</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-gray-800 divide-y divide-gray-700">
                     {medicines.map((medicine) => (
                       <tr key={medicine.id}>
                         <td className="px-6 py-4 whitespace-nowrap">{medicine.name}</td>
@@ -207,23 +204,23 @@ export default function SuperAdminDashboard() {
           {activeTab === 'Doctors' && (
             <div>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold">Doctor Details</h3>
-                <button className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                <h3 className="text-xl font-semibold">Doctors</h3>
+                <button className="flex items-center px-4 py-2 bg-gray-700 text-gray-100 rounded-md hover:bg-gray-600">
                   <PlusCircle className="mr-2 h-5 w-5" />
                   Add Doctor
                 </button>
               </div>
-              <div className="bg-white shadow rounded-lg overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+              <div className="bg-gray-800 shadow rounded-lg overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specialization</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patients</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Experience</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Specialization</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Patients</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase">Experience</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-gray-800 divide-y divide-gray-700">
                     {doctors.map((doctor) => (
                       <tr key={doctor.id}>
                         <td className="px-6 py-4 whitespace-nowrap">{doctor.name}</td>
@@ -234,29 +231,6 @@ export default function SuperAdminDashboard() {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'Reports' && (
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Reports</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <h4 className="text-lg font-semibold mb-2">Patient Statistics</h4>
-                  <p>Total Patients: 150</p>
-                  <p>New Patients (This Month): 12</p>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <h4 className="text-lg font-semibold mb-2">Appointment Statistics</h4>
-                  <p>Appointments Today: 8</p>
-                  <p>Appointments This Week: 35</p>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow">
-                  <h4 className="text-lg font-semibold mb-2">Medicine Usage</h4>
-                  <p>Most Prescribed: Amoxicillin</p>
-                  <p>Low Stock Alert: Lisinopril</p>
-                </div>
               </div>
             </div>
           )}

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { ChevronLeft, ChevronRight, Clock, Calendar, User } from 'lucide-react'
+import Navbar from './Navbar'
 
 // Mock data for doctors
 const doctors = [
@@ -79,6 +80,7 @@ export default function GetAppointment() {
     }
 
     return (
+      <>
       <div className="min-h-screen bg-gray-900 text-gray-100 p-6 flex items-center justify-center">
         <div className="max-w-lg mx-auto bg-gray-800 rounded-lg shadow-lg p-6 text-center">
           <h1 className="text-3xl font-bold mb-6">Thank You!</h1>
@@ -108,10 +110,14 @@ export default function GetAppointment() {
           </button>
         </div>
       </div>
+      </>
     )
   }
 
   return (
+
+  <>
+  <Navbar/>
     <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
       <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
         <h1 className="text-3xl font-bold mb-6">Schedule an Appointment</h1>
@@ -238,5 +244,6 @@ export default function GetAppointment() {
         </div>
       </div>
     </div>
+    </>
   )
 }

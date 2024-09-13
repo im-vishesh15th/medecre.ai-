@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PatientDeshboard from './components/PatientDeshboard';
 import ComprehensiveAppointmentPage from './components/Appoitment';
 import SymptomsPage from './components/Health';
-import { HealthProvider } from './context/HealthContext';
+import { HealthContext, HealthProvider } from './context/HealthContext';
 import GetAppointment from './components/Get-appoitment';
 import HealthAssessmentForm from './components/HealthForm';
+import DoctorDashboard from './components/DectorDeshboard';
+import SuperAdminDashboard from './components/SuperAdmin';
+
+
+
 
 
 const App = () => {
+
   return (
     <HealthProvider>
    <Router>
@@ -19,9 +25,12 @@ const App = () => {
    <Route path='/Login' element={<Login/>}></Route>
    <Route path='/ComprehensiveAppointmentPage' element={<ComprehensiveAppointmentPage/>}></Route>
    <Route path='/HealthAssessmentForm' element={<HealthAssessmentForm/>}></Route>
+   <Route path='/PatientDeshboard' element={<PatientDeshboard/>}></Route>
+   <Route path='/GetAppointment' element={<GetAppointment/>}></Route>
+   <Route path='/DoctorDashboard' element={<DoctorDashboard/>}></Route>
+   <Route path='/SuperAdminDashboard' element={<SuperAdminDashboard/>}></Route>
 
    </Routes>
-   <GetAppointment/>
    </Router>
    </HealthProvider>
   )

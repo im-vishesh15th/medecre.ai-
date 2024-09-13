@@ -8,7 +8,31 @@ export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
 
-  const { loginDetails, logout } = useContext(HealthContext);
+  const { loginDetails, logout,fetchuser,setfillform } = useContext(HealthContext);
+  useEffect(()=>{
+    const fetch =async()=>{
+    try{
+      await fetchuser();
+    }
+    catch{
+
+    }}
+    fetch()
+  },[fetchuser])
+
+  useEffect(()=>{
+    const fetch =()=>{
+    try{
+       setfillform(localStorage.getItem('fillform'))
+    }
+    catch{
+
+    }}
+    fetch()
+  },[localStorage.getItem('fillform')])
+
+  
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +53,7 @@ export default function Navbar() {
 
   return (
     <header className={`navbar ${isVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
-      <a href="#" className="navbar-logo">
+      <a href="/" className="navbar-logo">
         <HeartPulse size={32} color="#4fd1c5" />
         <span className="navbar-logo-text">CliniGuard</span>
       </a>

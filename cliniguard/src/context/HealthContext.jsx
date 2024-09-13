@@ -9,9 +9,11 @@ export const HealthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [token, setToken] = useState(null);
+    const [fillform,setfillform]=useState(false);
     const [loginDetails, setLoginDetails] = useState({
         isLogged: false,
         userName: '',
+        role:''
     });
 
     const auth_uri = 'https://authservice.priaid.ch/login';
@@ -92,14 +94,14 @@ export const HealthProvider = ({ children }) => {
         }
     };
 
-    const register = async (name, email, password) => {
+    const register = async (name, email, password,role) => {
         try {
             const response = await fetch('http://localhost:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password })
+                body: JSON.stringify({ name, email, password,role })
             });
 
             if (!response.ok) {
@@ -124,17 +126,19 @@ export const HealthProvider = ({ children }) => {
             });
 
             if (!response.ok) {
+                
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
 
             const data = await response.json();
             alert("user logged in")
+            localStorage.setItem('user',email);
             console.log(data);
             
-            setToken(data.Token);
             setLoginDetails({
                 isLogged: true,
                 userName: data.user||"unknown",
+                role:data.role
             });
             console.log(loginDetails);
             
@@ -143,12 +147,44 @@ export const HealthProvider = ({ children }) => {
         }
     };
 
+
+    const   fetchuser= async()=>{
+        const email = localStorage.getItem('user');
+        try {
+            const response = await fetch('http://localhost:5000/fetchuser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();            
+            setLoginDetails({
+                isLogged: true,
+                userName: data.user||"unknown",
+                role:data.role
+            });     
+            console.log(loginDetails);
+                   
+            
+        } catch (error) {
+            setError('Login failed');
+        }
+
+
+    }
+
     const logout = () => {
-        setToken(null);
         setLoginDetails({
             isLogged: false,
             userName: "",
         });
+        localStorage.removeItem('user')
+
     };
 
     useEffect(() => {
@@ -173,7 +209,10 @@ export const HealthProvider = ({ children }) => {
             loginDetails,
             register,
             login,
-            logout
+            logout,
+            fillform,
+            setfillform,
+            fetchuser
         }}>
             {children}
         </HealthContext.Provider>

@@ -9,8 +9,11 @@ import {
   Calendar
 } from 'lucide-react';
 import { HealthContext } from '../context/HealthContext';
+import { useNavigate } from "react-router-dom";
+
 
 const styles = {
+
   container: {
     minHeight: '100vh',
     width: '100vw',
@@ -21,8 +24,8 @@ const styles = {
     overflowX: 'hidden',
   },
   header: {
-    backgroundColor: '#4a90e2',
-    color: 'white',
+    backgroundColor: 'black',
+    color: '#4fd1c5',
     padding: '20px',
     textAlign: 'center',
     position: 'relative',
@@ -32,7 +35,7 @@ const styles = {
     top: '20px',
     right: '20px',
     backgroundColor: '#e74c3c',
-    color: 'white',
+    color: '#4fd1c5',
     border: 'none',
     borderRadius: '50%',
     width: '60px',
@@ -75,12 +78,13 @@ const styles = {
     border: 'none',
     fontSize: '16px',
     outline: 'none',
-    width:'100%'
+    width:'100%',
+    padding:'5px'
   },
   button: {
     padding: '15px 30px',
     fontSize: '18px',
-    backgroundColor: '#4a90e2',
+    backgroundColor: '#4fd1c5',
     color: 'white',
     border: 'none',
     borderRadius: '10px',
@@ -199,6 +203,8 @@ const styles = {
 };
 
 export default function ComprehensiveAppointmentPage() {
+  const navigate = useNavigate();
+
   const { symptoms, predictedDiseases, fetchDiseasePrediction, loading } = useContext(HealthContext);
   const [step, setStep] = useState(0);
   const [patientDetails, setPatientDetails] = useState({
@@ -255,6 +261,7 @@ export default function ComprehensiveAppointmentPage() {
 
   const handleBookAppointment = () => {
     alert('Booking an appointment...');
+    navigate("/GetAppointment")
   };
 
   const handleApplyVideoCall = () => {
@@ -266,7 +273,7 @@ export default function ComprehensiveAppointmentPage() {
       <button
         style={{  padding: '15px 30px',
           fontSize: '18px',
-          backgroundColor: '#4a90e2',
+          backgroundColor: '#4fd1c5',
           color: 'white',
           border: 'none',
           borderRadius: '10px',
@@ -276,7 +283,8 @@ export default function ComprehensiveAppointmentPage() {
           alignItems: 'center',
           justifyContent: 'center',
           width:'50%',
-          margin:'auto'
+          margin:'auto',
+          marginTop:'30px'
         }}
         onClick={() => setStep(step - 1)}
       >
@@ -284,19 +292,19 @@ export default function ComprehensiveAppointmentPage() {
       </button>
     );
     switch (step) {
-      case 0: // Welcome Page
+      case 0: 
         return (
           <div style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: 'calc(100vh - 100px)',
+            height: '90vh',
             textAlign: 'center',
-            backgroundImage: 'url(/placeholder.svg?height=400&width=800)',
+            backgroundImage: 'url("https://static.vecteezy.com/system/resources/previews/025/851/962/original/doctor-person-silhouette-pharmacist-worker-abstract-icon-health-care-worker-sign-round-logo-for-pharmacy-clinic-hospital-illustration-vector.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            color: 'white',
+            color: '#4fd1c5',
             textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
           }}>
             <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>Welcome to Our Advanced Medical Appointment System</h1>
@@ -308,9 +316,9 @@ export default function ComprehensiveAppointmentPage() {
         );
 
 
-        case 1: // Patient Details Page
+        case 1:
         return (
-          <form onSubmit={handlePatientDetailsSubmit} style={styles.form}>
+          <form onSubmit={handlePatientDetailsSubmit} style={styles.form} >
             <h2>Patient Details</h2>
             <div style={styles.inputGroup}>
               <User style={styles.icon} />
@@ -413,7 +421,14 @@ export default function ComprehensiveAppointmentPage() {
             <textarea
               rows="6"
               placeholder="Describe your symptoms or condition in detail..."
-              style={styles.input}
+              style={{  flex: 1,
+                border: 'none',
+                fontSize: '16px',
+                outline: 'none',
+                width:'100%',
+                padding:'5px',
+                minHeight:'300px'
+              }}
               value={symptomDescription}
               onChange={(e) => setSymptomDescription(e.target.value)}
             />
@@ -468,6 +483,15 @@ export default function ComprehensiveAppointmentPage() {
         </div>
       ) : (
         <p>No diseases could be predicted based on the selected symptoms.
+          <p>Please consult a healthcare provider for a definitive diagnosis.</p>
+          <div style={styles.actionButtonContainer}>
+            <button style={styles.actionButton} onClick={handleBookAppointment}>
+              Book Appointment
+            </button>
+            <button style={{ ...styles.actionButton, ...styles.videoCallButton }} onClick={handleApplyVideoCall}>
+              Apply for Video Call
+            </button>
+          </div>
           {renderBackButton}
         </p>
 
