@@ -29,8 +29,8 @@ export const HealthProvider = ({ children }) => {
     
 
     const auth_uri = 'https://authservice.priaid.ch/login';
-    const api_key = 'Pa49D_IIITM_AC_IN_AUT'; 
-    const secret_key = 'Fq4k5KWo8p9TLz62E';
+    const api_key = 'r6QSd_IIITM_AC_IN_AUT'; 
+    const secret_key = 't8QEb96LcMf43Kdr2';
     const health_base_uri = 'https://healthservice.priaid.ch';
 
     const generateHMACMD5 = (uri, secret_key) => {
