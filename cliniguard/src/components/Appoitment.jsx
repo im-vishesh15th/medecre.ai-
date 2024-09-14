@@ -10,13 +10,15 @@ import {
 } from 'lucide-react';
 import { HealthContext } from '../context/HealthContext';
 import { useNavigate } from "react-router-dom";
+import { transform } from 'framer-motion';
+import videoBackground from '../assets/142484-780232104_medium.mp4'; // Correct relative path to your video
 
 
 const styles = {
 
   container: {
     minHeight: '100vh',
-    width: '100vw',
+    width: '100%',
     margin: 0,
     padding: 0,
     fontFamily: 'Inter, sans-serif',
@@ -29,6 +31,7 @@ const styles = {
     padding: '20px',
     textAlign: 'center',
     position: 'relative',
+    zIndex:'10'
   },
   emergencyButton: {
     position: 'absolute',
@@ -58,8 +61,10 @@ const styles = {
     gap: '20px',
     width:'50%',
     margin:"auto",
+    height:'100%',
     textAlign:"center",
     marginTop:"20px",
+    
   },
   inputGroup: {
     display: 'flex',
@@ -93,6 +98,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex:'1'
   },
   symptomButton: {
     padding: '10px 15px',
@@ -200,6 +206,7 @@ const styles = {
   videoCallButton: {
     backgroundColor: '#e67e22',
   },
+  
 };
 
 export default function ComprehensiveAppointmentPage() {
@@ -284,7 +291,8 @@ export default function ComprehensiveAppointmentPage() {
           justifyContent: 'center',
           width:'50%',
           margin:'auto',
-          marginTop:'30px'
+          marginTop:'30px',
+    
         }}
         onClick={() => setStep(step - 1)}
       >
@@ -299,19 +307,44 @@ export default function ComprehensiveAppointmentPage() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '90vh',
+            height: '93vh',
+            width:'100%',
             textAlign: 'center',
-            backgroundImage: 'url("https://static.vecteezy.com/system/resources/previews/025/851/962/original/doctor-person-silhouette-pharmacist-worker-abstract-icon-health-care-worker-sign-round-logo-for-pharmacy-clinic-hospital-illustration-vector.jpg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundColor:'rgba(0, 0, 0, 0.1)',
+        
             color: '#4fd1c5',
             textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
           }}>
-            <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>Welcome to Our Advanced Medical Appointment System</h1>
-            <p style={{ fontSize: '1.2rem', maxWidth: '600px', marginBottom: '40px' }}>
+            <video 
+                  className="absolute top-0 left-0 w-full h-full object-cover"
+            src={videoBackground}
+            autoPlay
+            loop
+            muted
+            style={
+              {
+                top:'0',
+                right:0,
+                width:'100%',
+                position:'absolute',
+                zIndex:'1'
+              }
+            }
+            ></video>
+            <h1 style={{ fontSize: '3rem', marginBottom: '20px' ,zIndex:'1'}}>Welcome to Our Advanced Medical Appointment System</h1>
+            <p style={{ fontSize: '1.2rem', maxWidth: '600px',zIndex:'1', marginBottom: '40px' }}>
               Your health is our priority. Whether you need a routine check-up or urgent care, we're here to help.
             </p>
-            <button style={styles.button} onClick={() => setStep(1)}>Start Booking</button>
+            <button   onClick={() => setStep(1)} style={{
+              zIndex:1,
+              padding: '15px 30px',
+              fontSize: '18px',
+              borderRadius:'10px'
+            }}   className="bg-teal-400 text-white px-4 py-2 font-bold flex items-center gap-2 rounded hover:bg-teal-300 transition-transform transform hover:scale-105"
+            >
+    Start Booking
+            </button>
+
           </div>
         );
 

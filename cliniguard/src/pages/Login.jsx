@@ -17,7 +17,7 @@ export default function Login() {
   });
 
   const { login, register } = React.useContext(HealthContext);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     setFormData({

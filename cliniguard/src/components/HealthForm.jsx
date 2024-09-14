@@ -81,11 +81,15 @@ const HealthAssessmentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Submitted health data:', formData)
+   
+
+  }
+
+  const handle =()=>{
+    navigate("/PatientDeshboard");
     setfillform(true);
     localStorage.setItem('fillform',1);
-    navigate("/PatientDeshboard");
     console.log(fillform)
-
   }
 
   return (
@@ -328,7 +332,7 @@ const HealthAssessmentForm = () => {
               <div className="progress-fill" style={{ width: `${progress}%` }}></div>
             </div>
           </div>
-          <button type="submit" className="submit-button">
+          <button type="submit" className="submit-button" onClick={handle}>
             Submit Health Assessment
           </button>
         </div>

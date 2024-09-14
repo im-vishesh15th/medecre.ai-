@@ -10,8 +10,8 @@ import GetAppointment from './components/Get-appoitment';
 import HealthAssessmentForm from './components/HealthForm';
 import DoctorDashboard from './components/DectorDeshboard';
 import SuperAdminDashboard from './components/SuperAdmin';
-
-
+import VideoCallJoin from './pages/VideoCallJoin'
+import VideoCall from './pages/VideoCall'
 
 
 
@@ -29,9 +29,11 @@ const App = () => {
    <Route path='/GetAppointment' element={<GetAppointment/>}></Route>
    <Route path='/DoctorDashboard' element={<DoctorDashboard/>}></Route>
    <Route path='/SuperAdminDashboard' element={<SuperAdminDashboard/>}></Route>
-
+   <Route path='/call' element={<VideoCallJoin/>}></Route>
+   <Route path='/call/:roomId' element={<VideoCall/>}></Route>
    </Routes>
    </Router>
+ 
    </HealthProvider>
   )
 }

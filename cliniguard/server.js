@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use (cors())
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://daschayan8837:svd74food@shopper.zvng5.mongodb.net/').then(()=>{
+mongoose.connect('mongodb+srv://daschayan8837:svd74food@shopper.zvng5.mongodb.net/shop').then(()=>{
   console.log("connected");
   
 })
@@ -43,10 +43,14 @@ app.post('/register', async (req, res) => {
 
 // Login Endpoint
 app.post('/login', async (req, res) => {
+  console.log(req.body);
+  
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
+    console.log(user);
+    
 
     if (!user || user.password !== password) {
       return res.status(400).json({ message: 'Invalid email or password' });
