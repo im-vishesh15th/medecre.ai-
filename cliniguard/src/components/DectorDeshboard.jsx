@@ -1,4 +1,4 @@
-'use client'
+
 
 import React, { useContext, useState } from 'react'
 import { Calendar, Users, FileText, User, ChevronDown, Search, Bell, Video, LogOut } from 'lucide-react'

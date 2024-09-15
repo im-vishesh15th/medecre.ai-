@@ -6,12 +6,13 @@ import {
   MapPin,
   Phone,
   Mail,
-  Calendar
+  Calendar,
+  
+
 } from 'lucide-react';
 import { HealthContext } from '../context/HealthContext';
 import { useNavigate } from "react-router-dom";
-import { transform } from 'framer-motion';
-import videoBackground from '../assets/142484-780232104_medium.mp4'; // Correct relative path to your video
+import videoBackground from '../assets/141412-777708076_tiny.mp4'; // Correct relative path to your video
 
 
 const styles = {
@@ -223,10 +224,12 @@ const styles = {
     backgroundColor: 'white',
     borderRadius: '10px',
     padding: '20px',
-    maxWidth: '500px',
-    width: '100%',
+    height: '500px',
+    width: '700px',
     maxHeight: '80vh',
     overflowY: 'scroll',
+    display: 'flex',
+    flexDirection: 'column'
   },
   closeButton: {
     backgroundColor: '#e74c3c',
@@ -236,6 +239,7 @@ const styles = {
     cursor: 'pointer',
     padding: '10px',
     marginTop: '10px',
+
   }
 
 };
@@ -243,7 +247,7 @@ const styles = {
 export default function ComprehensiveAppointmentPage() {
   const navigate = useNavigate();
 
-  const { symptoms, predictedDiseases, fetchDiseasePrediction, loading,aiinfo } = useContext(HealthContext);
+  const { symptoms, predictedDiseases, fetchDiseasePrediction, loading, aiinfo } = useContext(HealthContext);
   const [step, setStep] = useState(0);
   const [patientDetails, setPatientDetails] = useState({
     name: '',
@@ -264,9 +268,7 @@ export default function ComprehensiveAppointmentPage() {
 
   const handleDiseaseInfo = async (disease) => {
     // Fetch disease info (or mock it for now)
-    const fetchedInfo =await aiinfo(disease.Issue.Name);
     setSelectedDiseaseName(disease.Issue.Name); // Set the name of the disease
-    setDiseaseInfo(fetchedInfo); // Set the fetched info
     setInfoDialogOpen(true); // Open the dialog
   };
 
@@ -380,8 +382,8 @@ export default function ComprehensiveAppointmentPage() {
                 }
               }
             ></video>
-            <h1 style={{ fontSize: '3rem', marginBottom: '20px', zIndex: '1' }}>Welcome to Our Advanced Medical Appointment System</h1>
-            <p style={{ fontSize: '1.2rem', maxWidth: '600px', zIndex: '1', marginBottom: '40px' }}>
+            <h1 style={{ fontSize: '3rem', marginBottom: '20px', zIndex: '1', color: 'white' }}>Welcome to Our Advanced Medical Appointment System</h1>
+            <p style={{ fontSize: '1.2rem', maxWidth: '600px', zIndex: '1', color: 'white', marginBottom: '40px' }}>
               Your health is our priority. Whether you need a routine check-up or urgent care, we're here to help.
             </p>
             <button onClick={() => setStep(1)} style={{
@@ -602,12 +604,47 @@ export default function ComprehensiveAppointmentPage() {
         </button>
       </header>
       {renderStep()}
-      {infoDialogOpen && (
-        <div style={styles.dialogOverlay} >
-          <div style={styles.dialogBox} >
-            <h2 style={{fontWeight:"bold"}}>{selectedDiseaseName} Info</h2>
-            {diseaseInfo}
-            <button style={styles.closeButton} onClick={closeDialog}>
+      {infoDialogOpen  && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto overflow-x-hidden">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Info</h2>
+            </div>
+            <div className="space-y-6">
+              <div className="bg-teal-100 dark:bg-teal-800 p-4 rounded-lg">
+                <h3 className="font-semibold text-lg mb-2 text-teal-800 dark:text-teal-200">Home Remedies:</h3>
+                <ul className="list-disc pl-5 text-teal-700 dark:text-teal-300">
+                  <li>Rest and sleep</li>
+                  <li>Stay hydrated with water and warm liquids</li>
+                  <li>Gargle with salt water</li>
+                  <li>Use a humidifier</li>
+                  <li>Try over-the-counter pain relievers</li>
+                </ul>
+              </div>
+              <div className="bg-blue-100 dark:bg-blue-800 p-4 rounded-lg">
+                <h3 className="font-semibold text-lg mb-2 text-blue-800 dark:text-blue-200">Diet Suggestions:</h3>
+                <ul className="list-disc pl-5 text-blue-700 dark:text-blue-300">
+                  <li>Chicken soup</li>
+                  <li>Citrus fruits high in Vitamin C</li>
+                  <li>Ginger tea with honey</li>
+                  <li>Garlic</li>
+                  <li>Yogurt with probiotics</li>
+                </ul>
+              </div>
+              <div className="bg-red-100 dark:bg-red-900 p-4 rounded-lg">
+                <h3 className="font-semibold text-lg mb-2 text-red-800 dark:text-red-200">When to See a Doctor:</h3>
+                <p className="text-red-700 dark:text-red-300 flex items-start">
+                  <AlertTriangle className="inline mr-2 flex-shrink-0" size={20} />
+                  <span>
+                    It's generally not necessary to see a doctor for a {selectedDiseaseName.toLowerCase()} unless symptoms persist for more than 10 days or become severe. However, consult a doctor if you experience high fever, severe pain, or difficulty breathing.
+                  </span>
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={closeDialog}
+              className="mt-6 w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+            >
               Close
             </button>
           </div>

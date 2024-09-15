@@ -61,6 +61,8 @@ export const HealthProvider = ({ children }) => {
 
     const fetchSymptoms = async () => {
         if (!token) return;
+        console.log("fetching data....");
+        
         try {
             const url = `${health_base_uri}/symptoms?token=${token}&format=json&language=en-gb`;
             const response = await fetch(url);
@@ -86,7 +88,6 @@ export const HealthProvider = ({ children }) => {
         try {
             const url = `${health_base_uri}/diagnosis?symptoms=${JSON.stringify(symptomIds)}&gender=${gender}&year_of_birth=${yearOfBirth}&token=${token}&format=json&language=en-gb`;
             console.log(url);
-            
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -196,24 +197,6 @@ export const HealthProvider = ({ children }) => {
 
     }
 
-    //  const botchat=async(id,message)=>{
-    //     try {
-    //         const response = await fetch('http://localhost:5000/chat', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ sessonId:id ,message})
-    //         });
-    //         if (!response.ok) {
-    //             throw new Error(`Error: ${response.status} ${response.statusText}`);
-    //         }
-    //         return await response.json().reply;
-            
-    //     }catch (error) {
-    //         setError('Gemini API failed');
-    //     }
-    //  }
     const botchat = async (id, message) => {
         try {
           const response = await fetch('http://localhost:5000/chat', {
@@ -313,7 +296,7 @@ export const HealthProvider = ({ children }) => {
             setfillform,
             fetchuser,
             PatientInfo,
-            botchat
+            botchat,aiinfo
         }}>
             {children}
         </HealthContext.Provider>

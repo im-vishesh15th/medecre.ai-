@@ -117,7 +117,7 @@ app.post('/info', async (req, res) => {
   try {
     const genAI = new GoogleGenerativeAI('AIzaSyCb8Lq4SbTBfHeBXHUmAj9Es73zeJdzVtw');
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = `Provide home remedies for the disease.\nHere is the context for response:\n${contextForResponse}`;
+    const prompt = `Provide home remedies for the disease. and it's necessery to go for doctor \nHere is the context for response:\n${contextForResponse}`;
     
     const result = await model.generateContent(prompt);
     const responseText = result.response.text();
