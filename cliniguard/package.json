@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.17.1",
+    "@google/generative-ai": "^0.17.2",
     "@gsap/react": "^2.1.1",
     "@shadcn/ui": "^0.0.4",
     "@zegocloud/zego-uikit-prebuilt": "^2.9.0",
@@ -18,12 +18,14 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
     "express": "^5.0.0",
     "framer-motion": "^11.5.2",
     "gsap": "^3.12.5",
     "lucide-react": "^0.438.0",
     "mongoose": "^8.6.1",
     "node-fetch": "^3.3.2",
+    "nodemon": "^3.1.4",
     "openai": "^4.57.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
