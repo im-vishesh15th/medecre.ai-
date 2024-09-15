@@ -95,6 +95,10 @@ export default function PatientDeshboard() {
   const handleappoitment = () => {
     navigate("/ComprehensiveAppointmentPage")
   }
+
+  const handlereport=()=>{
+    navigate("/PatientHealthReport")
+  }
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <header className="mb-8 flex justify-between items-center">
@@ -192,7 +196,8 @@ export default function PatientDeshboard() {
           <Clock className="mb-2" />
           Schedule Appointment
         </button>
-        <button className="bg-teal-600 hover:bg-teal-700 text-white p-4 rounded-lg transition duration-300 ease-in-out flex flex-col items-center">
+        <button onClick={handlereport}
+         className="bg-teal-600 hover:bg-teal-700 text-white p-4 rounded-lg transition duration-300 ease-in-out flex flex-col items-center">
           <FileText className="mb-2" />
           View Medical Records
         </button>

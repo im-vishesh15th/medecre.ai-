@@ -12,6 +12,8 @@ import DoctorDashboard from './components/DectorDeshboard';
 import SuperAdminDashboard from './components/SuperAdmin';
 import VideoCallJoin from './pages/VideoCallJoin'
 import VideoCall from './pages/VideoCall'
+import PatientHealthReport from './components/Report';
+
 
 
 
@@ -31,8 +33,10 @@ const App = () => {
    <Route path='/SuperAdminDashboard' element={<SuperAdminDashboard/>}></Route>
    <Route path='/call' element={<VideoCallJoin/>}></Route>
    <Route path='/call/:roomId' element={<VideoCall/>}></Route>
+   <Route path='PatientHealthReport' element={<PatientHealthReport/>} ></Route>
    </Routes>
    </Router>
+   
  
    </HealthProvider>
   )
