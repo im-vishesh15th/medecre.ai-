@@ -28,7 +28,7 @@ export const HealthProvider = ({ children }) => {
     const api_key = 'r6QSd_IIITM_AC_IN_AUT'; 
     const secret_key = 't8QEb96LcMf43Kdr2';
     const health_base_uri = 'https://healthservice.priaid.ch';
-
+    
     const generateHMACMD5 = (uri, secret_key) => {
         const hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.MD5, secret_key);
         hmac.update(uri);
@@ -197,6 +197,24 @@ export const HealthProvider = ({ children }) => {
 
     }
 
+     const botchat=async(id,message)=>{
+        try {
+            const response = await fetch('http://localhost:5000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ sessonId:id ,message})
+            });
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+            return response.json().reply;
+        }catch (error) {
+            setError('Gemini API failed');
+        }
+     }
+
     const logout = () => {
         setLoginDetails({
             isLogged: false,
@@ -233,7 +251,8 @@ export const HealthProvider = ({ children }) => {
             fillform,
             setfillform,
             fetchuser,
-            PatientInfo
+            PatientInfo,
+            botchat
         }}>
             {children}
         </HealthContext.Provider>
