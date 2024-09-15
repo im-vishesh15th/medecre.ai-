@@ -207,12 +207,43 @@ const styles = {
     backgroundColor: '#e67e22',
   },
 
+  dialogOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 999,
+  },
+  dialogBox: {
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    padding: '20px',
+    maxWidth: '500px',
+    width: '100%',
+    maxHeight: '80vh',
+    overflowY: 'scroll',
+  },
+  closeButton: {
+    backgroundColor: '#e74c3c',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    padding: '10px',
+    marginTop: '10px',
+  }
+
 };
 
 export default function ComprehensiveAppointmentPage() {
   const navigate = useNavigate();
 
-  const { symptoms, predictedDiseases, fetchDiseasePrediction, loading } = useContext(HealthContext);
+  const { symptoms, predictedDiseases, fetchDiseasePrediction, loading,aiinfo } = useContext(HealthContext);
   const [step, setStep] = useState(0);
   const [patientDetails, setPatientDetails] = useState({
     name: '',
@@ -225,6 +256,23 @@ export default function ComprehensiveAppointmentPage() {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [symptomDescription, setSymptomDescription] = useState('');
   const [error, setError] = useState('');
+
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false); // To control dialog visibility
+  const [diseaseInfo, setDiseaseInfo] = useState(''); // To store fetched info content
+  const [selectedDiseaseName, setSelectedDiseaseName] = useState(''); // To store the name of the disease
+
+
+  const handleDiseaseInfo = async (disease) => {
+    // Fetch disease info (or mock it for now)
+    const fetchedInfo =await aiinfo(disease.Issue.Name);
+    setSelectedDiseaseName(disease.Issue.Name); // Set the name of the disease
+    setDiseaseInfo(fetchedInfo); // Set the fetched info
+    setInfoDialogOpen(true); // Open the dialog
+  };
+
+  const closeDialog = () => {
+    setInfoDialogOpen(false);
+  };
 
   useEffect(() => {
     if (step === 4 && selectedSymptoms.length > 0) {
@@ -504,6 +552,13 @@ export default function ComprehensiveAppointmentPage() {
                         </li>
                       ))}
                     </ul>
+                    {/* Add the Info button */}
+                    <button
+                      style={styles.button}
+                      onClick={() => handleDiseaseInfo(disease)}
+                    >
+                      Info
+                    </button>
                   </div>
                 ))}
                 <p>Please consult a healthcare provider for a definitive diagnosis.</p>
@@ -547,6 +602,19 @@ export default function ComprehensiveAppointmentPage() {
         </button>
       </header>
       {renderStep()}
+      {infoDialogOpen && (
+        <div style={styles.dialogOverlay} >
+          <div style={styles.dialogBox} >
+            <h2 style={{fontWeight:"bold"}}>{selectedDiseaseName} Info</h2>
+            {diseaseInfo}
+            <button style={styles.closeButton} onClick={closeDialog}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+
