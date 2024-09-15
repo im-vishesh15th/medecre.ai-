@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Heart, Activity, Apple, Cigarette, Beer, Moon, Sun, Thermometer, Droplets } from 'lucide-react'
 import './HealthForm.css'
-import { HealthContext} from '../context/HealthContext'
+import { HealthContext } from '../context/HealthContext'
 import { useNavigate } from "react-router-dom";
 import PatientDeshboard from './PatientDeshboard';
 
@@ -11,8 +11,8 @@ import PatientDeshboard from './PatientDeshboard';
 
 const HealthAssessmentForm = () => {
   const navigate = useNavigate();
-  const {fillform,setfillform } = useContext(HealthContext);
- 
+  const { fillform, setfillform } = useContext(HealthContext);
+
   const [formData, setFormData] = useState({
     // Basic Information
     age: '',
@@ -48,7 +48,7 @@ const HealthAssessmentForm = () => {
 
   useEffect(() => {
     const totalFields = Object.keys(formData).length
-    const filledFields = Object.values(formData).filter(value => 
+    const filledFields = Object.values(formData).filter(value =>
       Array.isArray(value) ? value.length > 0 : value !== ''
     ).length
     setProgress((filledFields / totalFields) * 100)
@@ -72,7 +72,7 @@ const HealthAssessmentForm = () => {
   const handleCheckboxChange = (name, checked) => {
     setFormData(prevData => ({
       ...prevData,
-      chronicConditions: checked 
+      chronicConditions: checked
         ? [...prevData.chronicConditions, name]
         : prevData.chronicConditions.filter(item => item !== name)
     }))
@@ -81,19 +81,19 @@ const HealthAssessmentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Submitted health data:', formData)
-   
+
 
   }
 
-  const handle =()=>{
+  const handle = () => {
     navigate("/PatientDeshboard");
     setfillform(true);
-    localStorage.setItem('fillform',1);
+    localStorage.setItem('fillform', 1);
     console.log(fillform)
   }
 
   return (
-    
+
     <form onSubmit={handleSubmit} className="health-assessment-form">
       <div className="card">
         <div className="card-header">
@@ -144,20 +144,20 @@ const HealthAssessmentForm = () => {
                       <span>Blood Pressure</span>
                     </label>
                     <div className="input-group">
-                      <input 
-                        id="bloodPressureSystolic" 
-                        name="bloodPressureSystolic" 
-                        type="number" 
-                        placeholder="Systolic" 
+                      <input
+                        id="bloodPressureSystolic"
+                        name="bloodPressureSystolic"
+                        type="number"
+                        placeholder="Systolic"
                         value={formData.bloodPressureSystolic}
                         onChange={handleChange}
                         required
                       />
-                      <input 
-                        id="bloodPressureDiastolic" 
-                        name="bloodPressureDiastolic" 
-                        type="number" 
-                        placeholder="Diastolic" 
+                      <input
+                        id="bloodPressureDiastolic"
+                        name="bloodPressureDiastolic"
+                        type="number"
+                        placeholder="Diastolic"
                         value={formData.bloodPressureDiastolic}
                         onChange={handleChange}
                         required
@@ -295,7 +295,7 @@ const HealthAssessmentForm = () => {
                   <div className="checkbox-grid">
                     {['Diabetes', 'Hypertension', 'Asthma', 'Heart Disease', 'Arthritis', 'Cancer', 'Thyroid Disorder', 'Depression'].map((condition) => (
                       <label key={condition} className="checkbox-label">
-                        <input 
+                        <input
                           type="checkbox"
                           checked={formData.chronicConditions.includes(condition)}
                           onChange={(e) => handleCheckboxChange(condition, e.target.checked)}
@@ -338,7 +338,7 @@ const HealthAssessmentForm = () => {
         </div>
       </div>
     </form>
-  
+
   )
 }
 

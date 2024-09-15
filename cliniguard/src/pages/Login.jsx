@@ -2,12 +2,26 @@ import * as React from "react";
 import { HealthContext } from "../context/HealthContext";
 import { useNavigate } from "react-router-dom";
 
+
 const PulseIcon = () => (
   <svg className="w-16 h-16 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
   </svg>
 );
 export default function Login() {
+  const [bubbles, setBubbles] = React.useState([]);
+
+  React.useEffect(() => {
+    // Generate bubbles only once on initial render
+    const generatedBubbles = [...Array(20)].map(() => ({
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      width: `${Math.random() * 300 + 50}px`,
+      height: `${Math.random() * 300 + 50}px`,
+      animationDuration: `${Math.random() * 10 + 5}s`
+    }));
+    setBubbles(generatedBubbles);
+  }, []);
   const [isLogin, setIsLogin] = React.useState(true);
   const [formData, setFormData] = React.useState({
     name: "",
@@ -17,7 +31,7 @@ export default function Login() {
   });
 
   const { login, register } = React.useContext(HealthContext);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -33,23 +47,24 @@ export default function Login() {
         navigate("/");
       })
     } else {
-      register(formData.name, formData.email, formData.password,formData.role);
+      register(formData.name, formData.email, formData.password, formData.role);
     }
   };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Animated background elements */}
+
+
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {bubbles.map((bubble, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-teal-500 opacity-10"
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              width: `${Math.random() * 300 + 50}px`,
-              height: `${Math.random() * 300 + 50}px`,
-              animation: `float ${Math.random() * 10 + 5}s infinite ease-in-out`,
+              top: bubble.top,
+              left: bubble.left,
+              width: bubble.width,
+              height: bubble.height,
+              animation: `float ${bubble.animationDuration} infinite ease-in-out`,
             }}
           />
         ))}
@@ -63,7 +78,7 @@ export default function Login() {
             </div>
           </div>
           <h2 className="text-4xl font-extrabold text-white mb-2">
-            Clinic Portal
+            CliniGuard
           </h2>
           <p className="text-teal-400 text-lg">Your health, our priority</p>
         </div>
@@ -71,17 +86,15 @@ export default function Login() {
         <div className="flex justify-center space-x-4 mb-8">
           <button
             onClick={() => setIsLogin(true)}
-            className={`px-6 py-2 rounded-full transition-all duration-300 text-lg font-medium ${
-              isLogin ? "bg-teal-600 text-white shadow-lg" : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-            }`}
+            className={`px-6 py-2 rounded-full transition-all duration-300 text-lg font-medium ${isLogin ? "bg-teal-600 text-white shadow-lg" : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+              }`}
           >
             Login
           </button>
           <button
             onClick={() => setIsLogin(false)}
-            className={`px-6 py-2 rounded-full transition-all duration-300 text-lg font-medium ${
-              !isLogin ? "bg-teal-600 text-white shadow-lg" : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-            }`}
+            className={`px-6 py-2 rounded-full transition-all duration-300 text-lg font-medium ${!isLogin ? "bg-teal-600 text-white shadow-lg" : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+              }`}
           >
             Register
           </button>
@@ -117,9 +130,8 @@ export default function Login() {
                 name="email"
                 type="email"
                 required
-                className={`appearance-none ${
-                  isLogin ? "rounded-t-md" : "rounded-md"
-                } relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm`}
+                className={`appearance-none ${isLogin ? "rounded-t-md" : "rounded-md"
+                  } relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm`}
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
@@ -134,9 +146,8 @@ export default function Login() {
                 name="password"
                 type="password"
                 required
-                className={`appearance-none ${
-                  isLogin ? "rounded-b-md" : "rounded-md"
-                } relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm`}
+                className={`appearance-none ${isLogin ? "rounded-b-md" : "rounded-md"
+                  } relative block w-full px-3 py-3 border border-gray-700 placeholder-gray-400 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent sm:text-sm`}
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}

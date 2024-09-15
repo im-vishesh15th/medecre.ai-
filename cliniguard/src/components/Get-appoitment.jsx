@@ -1,6 +1,4 @@
-
-
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, Clock, Calendar, User } from 'lucide-react'
 import Navbar from './Navbar'
 
@@ -11,6 +9,18 @@ const doctors = [
   { id: 3, name: 'Dr. Mike Johnson', specialization: 'Pediatrician', avatar: '👨‍⚕️' },
   { id: 4, name: 'Dr. Sarah Brown', specialization: 'Dermatologist', avatar: '👩‍⚕️' },
 ]
+
+// Function to select a color and determine if the button should be disabled
+
+const selectColour = () => {
+  const colors = ['red', 'yellow', 'green'];
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  const selectedColor = colors[randomIndex];
+  return {
+    color: selectedColor,
+    disabled: selectedColor === 'red'
+  };
+}
 
 // Helper function to generate time slots
 const generateTimeSlots = () => {
@@ -80,7 +90,6 @@ export default function GetAppointment() {
     }
 
     return (
-      <>
       <div className="min-h-screen bg-gray-900 text-gray-100 p-6 flex items-center justify-center">
         <div className="max-w-lg mx-auto bg-gray-800 rounded-lg shadow-lg p-6 text-center">
           <h1 className="text-3xl font-bold mb-6">Thank You!</h1>
@@ -110,109 +119,110 @@ export default function GetAppointment() {
           </button>
         </div>
       </div>
-      </>
     )
   }
 
   return (
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
+        <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
+          <h1 className="text-3xl font-bold mb-6">Schedule an Appointment</h1>
 
-  <>
-  <Navbar/>
-    <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
-        <h1 className="text-3xl font-bold mb-6">Schedule an Appointment</h1>
-
-        {/* Calendar */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Select a Date</h2>
-            <div className="flex items-center">
-              <button onClick={handlePrevMonth} className="p-1 rounded-full hover:bg-gray-700">
-                <ChevronLeft size={24} />
-              </button>
-              <span className="mx-4">{currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
-              <button onClick={handleNextMonth} className="p-1 rounded-full hover:bg-gray-700">
-                <ChevronRight size={24} />
-              </button>
+          {/* Calendar */}
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Select a Date</h2>
+              <div className="flex items-center">
+                <button onClick={handlePrevMonth} className="p-1 rounded-full hover:bg-gray-700">
+                  <ChevronLeft size={24} />
+                </button>
+                <span className="mx-4">{currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
+                <button onClick={handleNextMonth} className="p-1 rounded-full hover:bg-gray-700">
+                  <ChevronRight size={24} />
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-7 gap-2">
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                <div key={day} className="text-center font-medium">{day}</div>
+              ))}
+              {Array.from({ length: firstDayOfMonth }).map((_, index) => (
+                <div key={`empty-${index}`} />
+              ))}
+              {Array.from({ length: daysInMonth }).map((_, index) => {
+                const day = index + 1
+                const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
+                const isSelected = selectedDate?.toDateString() === date.toDateString()
+                const isDisabled = date < new Date(new Date().setHours(0, 0, 0, 0))
+                return (
+                  <button
+                    key={day}
+                    onClick={() => !isDisabled && handleDateClick(day)}
+                    className={`p-2 rounded-full ${
+                      isSelected
+                        ? 'bg-blue-500 text-white'
+                        : isDisabled
+                        ? 'text-gray-500 cursor-not-allowed'
+                        : 'hover:bg-gray-700'
+                    }`}
+                    disabled={isDisabled}
+                  >
+                    {day}
+                  </button>
+                )
+              })}
             </div>
           </div>
-          <div className="grid grid-cols-7 gap-2">
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-              <div key={day} className="text-center font-medium">{day}</div>
-            ))}
-            {Array.from({ length: firstDayOfMonth }).map((_, index) => (
-              <div key={`empty-${index}`} />
-            ))}
-            {Array.from({ length: daysInMonth }).map((_, index) => {
-              const day = index + 1
-              const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
-              const isSelected = selectedDate?.toDateString() === date.toDateString()
-              const isDisabled = date < new Date(new Date().setHours(0, 0, 0, 0))
-              return (
-                <button
-                  key={day}
-                  onClick={() => !isDisabled && handleDateClick(day)}
-                  className={`p-2 rounded-full ${
-                    isSelected
-                      ? 'bg-blue-500 text-white'
-                      : isDisabled
-                      ? 'text-gray-500 cursor-not-allowed'
-                      : 'hover:bg-gray-700'
-                  }`}
-                  disabled={isDisabled}
-                >
-                  {day}
-                </button>
-              )
-            })}
-          </div>
-        </div>
 
-        {/* Doctor Selection */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Select a Doctor</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {doctors.map(doctor => (
-              <button
-                key={doctor.id}
-                onClick={() => handleDoctorSelect(doctor.id)}
-                className={`p-4 rounded-lg ${
-                  selectedDoctor === doctor.id ? 'bg-blue-500' : 'bg-gray-700'
-                } hover:bg-blue-600 transition-colors`}
-              >
-                <div className="flex items-center">
-                  <span className="text-4xl mr-4">{doctor.avatar}</span>
-                  <div className="text-left">
-                    <div className="font-semibold">{doctor.name}</div>
-                    <div className="text-sm text-gray-300">{doctor.specialization}</div>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Time Selection */}
-        {selectedDate && selectedDoctor && (
+          {/* Doctor Selection */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Select a Time</h2>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-              {timeSlots.map(time => (
+            <h2 className="text-xl font-semibold mb-4">Select a Doctor</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {doctors.map(doctor => (
                 <button
-                  key={time}
-                  onClick={() => handleTimeSelect(time)}
-                  className={`p-2 rounded ${
-                    selectedTime === time ? 'bg-blue-500' : 'bg-gray-700'
+                  key={doctor.id}
+                  onClick={() => handleDoctorSelect(doctor.id)}
+                  className={`p-4 rounded-lg ${
+                    selectedDoctor === doctor.id ? 'bg-blue-500' : 'bg-gray-700'
                   } hover:bg-blue-600 transition-colors`}
                 >
-                  {time}
+                  <div className="flex items-center">
+                    <span className="text-4xl mr-4">{doctor.avatar}</span>
+                    <div className="text-left">
+                      <div className="font-semibold">{doctor.name}</div>
+                      <div className="text-sm text-gray-300">{doctor.specialization}</div>
+                    </div>
+                  </div>
                 </button>
               ))}
             </div>
           </div>
-        )}
 
-        {/* Appointment Summary */}
+          {/* Time Selection */}
+          {selectedDate && selectedDoctor && (
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-4">Select a Time</h2>
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                {timeSlots.map(time => {
+                  const { color, disabled } = selectColour();
+
+                  return (
+                    <button
+                      key={time}
+                      onClick={() => !disabled && handleTimeSelect(time)}
+                      className={`p-2 rounded-lg ${selectedTime === time ? 'bg-blue-500' : 'bg-gray-700'} ${disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-blue-600'} transition-colors`}
+                      style={{ color }}
+                      disabled={disabled}
+                    >
+                      {time}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+          {/* Appointment Summary */}
         {selectedDate && selectedDoctor && selectedTime && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-4">Appointment Summary</h2>
@@ -227,23 +237,25 @@ export default function GetAppointment() {
               </div>
               <div className="flex items-center">
                 <Clock className="mr-2" size={20} />
-                <span>{selectedTime || ''}</span>
+                <span style={{
+                  
+                }}>{selectedTime || ''}</span>
               </div>
             </div>
           </div>
         )}
 
-        {/* Submit Button */}
-        <div className="text-center">
-          <button
-            onClick={handleSubmit}
-            className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            Confirm Appointment
-          </button>
+          {/* Submit Button */}
+          <div className="text-center">
+            <button
+              onClick={handleSubmit}
+              className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            >
+              Confirm Appointment
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </>
   )
 }

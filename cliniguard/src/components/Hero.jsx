@@ -46,11 +46,11 @@ const Hero = () => {
             Revolutionize Your Clinic Operations
           </h1>
           <p className="text-white mb-8 text-lg transition-opacity opacity-90 hover:opacity-100">
-            CliniGuard: A comprehensive web application to empower healthcare providers, 
+            CliniGuard: A comprehensive web application to empower healthcare providers,
             enhance patient care, and streamline your entire clinical workflow.
           </p>
-          <button 
-            onClick={handleRedirect} 
+          <button
+            onClick={handleRedirect}
             className="bg-teal-400 text-gray-900 px-4 py-2 font-bold flex items-center gap-2 rounded hover:bg-teal-300 transition-transform transform hover:scale-105"
           >
             Get Started <ArrowRight size={16} />

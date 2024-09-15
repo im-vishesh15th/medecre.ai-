@@ -31,7 +31,7 @@ const styles = {
     padding: '20px',
     textAlign: 'center',
     position: 'relative',
-    zIndex:'10'
+    zIndex: '10'
   },
   emergencyButton: {
     position: 'absolute',
@@ -59,12 +59,12 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
-    width:'50%',
-    margin:"auto",
-    height:'100%',
-    textAlign:"center",
-    marginTop:"20px",
-    
+    width: '50%',
+    margin: "auto",
+    height: '100%',
+    textAlign: "center",
+    marginTop: "20px",
+
   },
   inputGroup: {
     display: 'flex',
@@ -83,8 +83,8 @@ const styles = {
     border: 'none',
     fontSize: '16px',
     outline: 'none',
-    width:'100%',
-    padding:'5px'
+    width: '100%',
+    padding: '5px'
   },
   button: {
     padding: '15px 30px',
@@ -98,7 +98,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex:'1'
+    zIndex: '1'
   },
   symptomButton: {
     padding: '10px 15px',
@@ -121,14 +121,14 @@ const styles = {
     padding: '10px',
     backgroundColor: 'white',
   },
-  
+
   error: {
     color: '#e74c3c',
     marginTop: '10px',
     fontWeight: 'bold',
   },
-  
-  
+
+
   suggestionBox: {
     backgroundColor: 'white',
     border: '1px solid #4a90e2',
@@ -206,7 +206,7 @@ const styles = {
   videoCallButton: {
     backgroundColor: '#e67e22',
   },
-  
+
 };
 
 export default function ComprehensiveAppointmentPage() {
@@ -228,7 +228,7 @@ export default function ComprehensiveAppointmentPage() {
 
   useEffect(() => {
     if (step === 4 && selectedSymptoms.length > 0) {
-      fetchDiseasePrediction(selectedSymptoms, patientDetails.sex,2004);
+      fetchDiseasePrediction(selectedSymptoms, patientDetails.sex, 2004);
     }
   }, [step]);
 
@@ -278,7 +278,8 @@ export default function ComprehensiveAppointmentPage() {
   const renderStep = () => {
     const renderBackButton = step > 0 && (
       <button
-        style={{  padding: '15px 30px',
+        style={{
+          padding: '15px 30px',
           fontSize: '18px',
           backgroundColor: '#4fd1c5',
           color: 'white',
@@ -289,10 +290,10 @@ export default function ComprehensiveAppointmentPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width:'50%',
-          margin:'auto',
-          marginTop:'30px',
-    
+          width: '50%',
+          margin: 'auto',
+          marginTop: '30px',
+
         }}
         onClick={() => setStep(step - 1)}
       >
@@ -300,7 +301,7 @@ export default function ComprehensiveAppointmentPage() {
       </button>
     );
     switch (step) {
-      case 0: 
+      case 0:
         return (
           <div style={{
             display: 'flex',
@@ -308,48 +309,48 @@ export default function ComprehensiveAppointmentPage() {
             alignItems: 'center',
             justifyContent: 'center',
             height: '93vh',
-            width:'100%',
+            width: '100%',
             textAlign: 'center',
-            backgroundColor:'rgba(0, 0, 0, 0.1)',
-        
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+
             color: '#4fd1c5',
             textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
           }}>
-            <video 
-                  className="absolute top-0 left-0 w-full h-full object-cover"
-            src={videoBackground}
-            autoPlay
-            loop
-            muted
-            style={
-              {
-                top:'0',
-                right:0,
-                width:'100%',
-                position:'absolute',
-                zIndex:'1'
+            <video
+              className="absolute top-0 left-0 w-full h-full object-cover"
+              src={videoBackground}
+              autoPlay
+              loop
+              muted
+              style={
+                {
+                  top: '0',
+                  right: 0,
+                  width: '100%',
+                  position: 'absolute',
+                  zIndex: '1'
+                }
               }
-            }
             ></video>
-            <h1 style={{ fontSize: '3rem', marginBottom: '20px' ,zIndex:'1'}}>Welcome to Our Advanced Medical Appointment System</h1>
-            <p style={{ fontSize: '1.2rem', maxWidth: '600px',zIndex:'1', marginBottom: '40px' }}>
+            <h1 style={{ fontSize: '3rem', marginBottom: '20px', zIndex: '1' }}>Welcome to Our Advanced Medical Appointment System</h1>
+            <p style={{ fontSize: '1.2rem', maxWidth: '600px', zIndex: '1', marginBottom: '40px' }}>
               Your health is our priority. Whether you need a routine check-up or urgent care, we're here to help.
             </p>
-            <button   onClick={() => setStep(1)} style={{
-              zIndex:1,
+            <button onClick={() => setStep(1)} style={{
+              zIndex: 1,
               padding: '15px 30px',
               fontSize: '18px',
-              borderRadius:'10px'
-            }}   className="bg-teal-400 text-white px-4 py-2 font-bold flex items-center gap-2 rounded hover:bg-teal-300 transition-transform transform hover:scale-105"
+              borderRadius: '10px'
+            }} className="bg-teal-400 text-white px-4 py-2 font-bold flex items-center gap-2 rounded hover:bg-teal-300 transition-transform transform hover:scale-105"
             >
-    Start Booking
+              Start Booking
             </button>
 
           </div>
         );
 
 
-        case 1:
+      case 1:
         return (
           <form onSubmit={handlePatientDetailsSubmit} style={styles.form} >
             <h2>Patient Details</h2>
@@ -417,13 +418,13 @@ export default function ComprehensiveAppointmentPage() {
               />
             </div>
             {error && <div style={styles.error}>{error}</div>}
-            
+
             <button type="submit" style={styles.button}>Continue to Symptoms Selection</button>
             {renderBackButton}
           </form>
         );
 
-        case 2: // Symptom Selection Page
+      case 2: // Symptom Selection Page
         return (
           <div style={styles.content}>
             <h2>Select Your Symptoms</h2>
@@ -454,13 +455,14 @@ export default function ComprehensiveAppointmentPage() {
             <textarea
               rows="6"
               placeholder="Describe your symptoms or condition in detail..."
-              style={{  flex: 1,
+              style={{
+                flex: 1,
                 border: 'none',
                 fontSize: '16px',
                 outline: 'none',
-                width:'100%',
-                padding:'5px',
-                minHeight:'300px'
+                width: '100%',
+                padding: '5px',
+                minHeight: '300px'
               }}
               value={symptomDescription}
               onChange={(e) => setSymptomDescription(e.target.value)}
@@ -472,64 +474,64 @@ export default function ComprehensiveAppointmentPage() {
             </div>
           </div>
         );
-        case 4: // Disease Prediction Page
+      case 4: // Disease Prediction Page
         return (
-          <div style={{ textAlign: 'center', marginTop: '50px', width:'50%', margin:'auto' }}>
-      <h2>Disease Suggestions</h2>
-      {loading ? (
-        <p>Loading disease predictions...</p>
-      ) : predictedDiseases?.length > 0 ? (
-        <div style={styles.suggestionBox }>
-          <p>Based on your symptoms, you might have:</p>
-          {predictedDiseases.map((disease, index) => (
-            <div key={index} style={styles.diseaseBox}>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                <div style={styles.roundIndicatorContainer}>
-                  <div style={styles.roundIndicator(disease.Issue.Accuracy)}>
-                    <span style={styles.roundIndicatorText}>
-                      {disease.Issue.Accuracy.toFixed(0)}
-                    </span>
+          <div style={{ textAlign: 'center', marginTop: '50px', width: '50%', margin: 'auto' }}>
+            <h2>Disease Suggestions</h2>
+            {loading ? (
+              <p>Loading disease predictions...</p>
+            ) : predictedDiseases?.length > 0 ? (
+              <div style={styles.suggestionBox}>
+                <p>Based on your symptoms, you might have:</p>
+                {predictedDiseases.map((disease, index) => (
+                  <div key={index} style={styles.diseaseBox}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                      <div style={styles.roundIndicatorContainer}>
+                        <div style={styles.roundIndicator(disease.Issue.Accuracy)}>
+                          <span style={styles.roundIndicatorText}>
+                            {disease.Issue.Accuracy.toFixed(0)}
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <strong>{disease.Issue.Name}</strong>
+                      </div>
+                    </div>
+                    <ul style={styles.specialisationList}>
+                      {disease.Specialisation.map((specialist, specIndex) => (
+                        <li key={specIndex} style={styles.specialisationItem}>
+                          Specialization: {specialist.Name}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-                <div>
-                  <strong>{disease.Issue.Name}</strong>
+                ))}
+                <p>Please consult a healthcare provider for a definitive diagnosis.</p>
+                <div style={styles.actionButtonContainer}>
+                  <button style={styles.actionButton} onClick={handleBookAppointment}>
+                    Book Appointment
+                  </button>
+                  <button style={{ ...styles.actionButton, ...styles.videoCallButton }} onClick={handleApplyVideoCall}>
+                    Apply for Video Call
+                  </button>
                 </div>
               </div>
-              <ul style={styles.specialisationList}>
-                {disease.Specialisation.map((specialist, specIndex) => (
-                  <li key={specIndex} style={styles.specialisationItem}>
-                    Specialization: {specialist.Name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <p>Please consult a healthcare provider for a definitive diagnosis.</p>
-          <div style={styles.actionButtonContainer}>
-            <button style={styles.actionButton} onClick={handleBookAppointment}>
-              Book Appointment
-            </button>
-            <button style={{ ...styles.actionButton, ...styles.videoCallButton }} onClick={handleApplyVideoCall}>
-              Apply for Video Call
-            </button>
-          </div>
-        </div>
-      ) : (
-        <p>No diseases could be predicted based on the selected symptoms.
-          <p>Please consult a healthcare provider for a definitive diagnosis.</p>
-          <div style={styles.actionButtonContainer}>
-            <button style={styles.actionButton} onClick={handleBookAppointment}>
-              Book Appointment
-            </button>
-            <button style={{ ...styles.actionButton, ...styles.videoCallButton }} onClick={handleApplyVideoCall}>
-              Apply for Video Call
-            </button>
-          </div>
-          {renderBackButton}
-        </p>
+            ) : (
+              <p>No diseases could be predicted based on the selected symptoms.
+                <p>Please consult a healthcare provider for a definitive diagnosis.</p>
+                <div style={styles.actionButtonContainer}>
+                  <button style={styles.actionButton} onClick={handleBookAppointment}>
+                    Book Appointment
+                  </button>
+                  <button style={{ ...styles.actionButton, ...styles.videoCallButton }} onClick={handleApplyVideoCall}>
+                    Apply for Video Call
+                  </button>
+                </div>
+                {renderBackButton}
+              </p>
 
-      )}
-    </div>
+            )}
+          </div>
         );
       default:
         return <div>Invalid step</div>;
