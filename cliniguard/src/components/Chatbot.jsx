@@ -43,7 +43,7 @@ export default function Component() {
       <div className="fixed bottom-4 right-4 z-50">
         {!isOpen && (
           <button
-            className="rounded-full w-16 h-16 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="rounded-full w-16 h-16 bg-black text-primary-foreground hover:bg-primary/90 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             onClick={() => setIsOpen(true)}
           >
             <svg
