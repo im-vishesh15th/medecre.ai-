@@ -77,16 +77,13 @@ app.post('/fetchuser', async (req, res) => {
 const chatSessions = {};
 
 app.post('/chat', async (req, res) => {
-  console.log("hi")
   console.log(req.body.prompt);
-  const sessionId = req.body.sessionId;  // Unique session ID for the user
+  const sessionId = req.body.sessionId;  
   const message = req.body.message;
   if (!chatSessions[sessionId]) {
     chatSessions[sessionId] = [];
   }
-
-  // Append user's message to the session chat history
-  chatSessions[sessionId].push({ role: 'user', content: message });
+chatSessions[sessionId].push({ role: 'user', content: message });
 console.log(chatSessions);
 
 
@@ -97,7 +94,7 @@ console.log(chatSessions);
     const latestUserMessage = chatSessions[sessionId].filter(msg => msg.role === 'user').pop()?.content || '';
 
     const contextForResponse = chatSessions[sessionId].map(msg => msg.content).join('\n');
-    const prompt = `Here is a conversation context:\n${contextForResponse}\nRespond to the last message: "${latestUserMessage}"`
+    const prompt = `you are a medical chatbot.your name is "clinibot",so response to the name "clinibot" to user ,so here user will ask u medical related queries.try giving answers to the point.\nHere is a conversation context:\n${contextForResponse}\nRespond to the last message: "${latestUserMessage}"`
     
     const result = await model.generateContent(prompt);
     console.log(result.response.text());
@@ -108,6 +105,31 @@ console.log(chatSessions);
     res.status(500).json({ error: 'Failed to generate content from Gemini API' });
   }
 });
+
+
+
+
+
+
+app.post('/info', async (req, res) => {
+  const contextForResponse = req.body.contextForResponse;
+
+  try {
+    const genAI = new GoogleGenerativeAI('AIzaSyCb8Lq4SbTBfHeBXHUmAj9Es73zeJdzVtw');
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `Provide home remedies for the disease.\nHere is the context for response:\n${contextForResponse}`;
+    
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
+    
+    res.status(200).json({ reply: responseText });
+  } catch (error) {
+    console.error('Error during chatbot request:', error);
+    res.status(500).json({ error: 'Failed to generate content from Gemini API' });
+  }
+});
+
+
 
 // Start Server
 app.listen(port, () => {

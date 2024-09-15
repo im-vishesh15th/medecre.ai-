@@ -197,23 +197,85 @@ export const HealthProvider = ({ children }) => {
 
     }
 
-     const botchat=async(id,message)=>{
+    //  const botchat=async(id,message)=>{
+    //     try {
+    //         const response = await fetch('http://localhost:5000/chat', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ sessonId:id ,message})
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error(`Error: ${response.status} ${response.statusText}`);
+    //         }
+    //         return await response.json().reply;
+            
+    //     }catch (error) {
+    //         setError('Gemini API failed');
+    //     }
+    //  }
+    const botchat = async (id, message) => {
         try {
-            const response = await fetch('http://localhost:5000/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ sessonId:id ,message})
-            });
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status} ${response.statusText}`);
-            }
-            return response.json().reply;
-        }catch (error) {
-            setError('Gemini API failed');
+          const response = await fetch('http://localhost:5000/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ sessionId: id, message })  // Corrected sessionId
+          });
+      
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+          }
+      
+          const data = await response.json();
+          
+          // Check if reply exists in the response
+          if (data && data.reply) {
+            return data.reply;
+          } else {
+            throw new Error('No reply from server');
+          }
+      
+        } catch (error) {
+          console.error('Gemini API failed:', error);
+          return 'Sorry, something went wrong. Please try again later.'; // Return a fallback message
         }
-     }
+      };
+      
+
+
+      const aiinfo = async ( message) => {
+        try {
+          const response = await fetch('http://localhost:5000/info', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({  message })  // Corrected sessionId
+          });
+      
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+          }
+      
+          const data = await response.json();
+          
+          // Check if reply exists in the response
+          if (data && data.reply) {
+            return data.reply;
+          } else {
+            throw new Error('No reply from server');
+          }
+      
+        } catch (error) {
+          console.error('Gemini API failed:', error);
+          return 'Sorry, something went wrong. Please try again later.'; // Return a fallback message
+        }
+      };
+      
+
 
     const logout = () => {
         setLoginDetails({

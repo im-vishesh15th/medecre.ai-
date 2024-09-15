@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { HealthContext } from "../context/HealthContext";
 import { useLocation } from "react-router-dom";
 import VideoCall from "../pages/VideoCall";
+import Component from "./Chatbot";
+
 
 
 
@@ -100,7 +102,9 @@ export default function PatientDeshboard() {
     navigate("/PatientHealthReport")
   }
   return (
+    
     <div className="min-h-screen bg-gray-900 text-white p-8">
+      <Component/>
       <header className="mb-8 flex justify-between items-center">
         <h1 className="text-3xl font-bold text-teal-400">Patient Dashboard</h1>
         <div className="flex space-x-4">
