@@ -14,11 +14,10 @@
 
 ## Tech Stack
 
-- **Frontend**: React, Next.js (v14.2.13)
+- **Frontend**: Reactjs
 - **Backend**: Node.js, Express
-- **Database**: Firebase, MongoDB
-- **AI Integration**: Python, TensorFlow
-- **Real-time Communication**: WebSockets, Firebase Firestore
+- **Database**: MongoDB
+- **Real-time Communication**: WebSockets
 
 ## Project Architecture
 
