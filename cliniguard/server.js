@@ -117,18 +117,27 @@ app.post('/info', async (req, res) => {
   try {
     const genAI = new GoogleGenerativeAI('AIzaSyCb8Lq4SbTBfHeBXHUmAj9Es73zeJdzVtw');
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const prompt = `Provide home remedies for the disease. and it's necessery to go for doctor \nHere is the context for response:\n${contextForResponse}`;
-    
+    const prompt = `give html format output only using li items ,dont use redundant html tags directly start with ul and li tags and  dont use asteriks instead use round bullet points,dont use html in first line  in output.Provide home remedies for the disease name ${req.body.message}.give me output in proper format.`;
+    const prompt2 = `give html format output only using li items ,dont use redundant html tags directly start with ul and li tags and  dont use asteriks instead use round bullet points,dont use html in first line  in output.Provide diet suggestions for the disease name ${req.body.message}.give me output in proper format.`;
+    const prompt3 = `give html format output only using li items ,dont use redundant html tags directly start with ul and li tags and  dont use asteriks instead use round bullet points,dont use html in first line  in output.Provide if it is urgently needed to visit doctor and make unecessary crowd at a small clinic or can be cured home remedies and how many more days he should check or wait for the disease name ${req.body.message}.dont give unecessary information tell what is aked only .give me output in proper format.`;
+
     const result = await model.generateContent(prompt);
+    const result2 = await model.generateContent(prompt2);
+    const result3 = await model.generateContent(prompt3);
+
+
     const responseText = result.response.text();
-    
-    res.status(200).json({ reply: responseText });
+    console.log(responseText);
+    const responseText2 = result2.response.text();
+    console.log(responseText2);
+    const responseText3 = result3.response.text();
+    console.log(responseText3);
+    res.status(200).json({ reply1: responseText , reply2:responseText2 , reply3:responseText3 });
   } catch (error) {
     console.error('Error during chatbot request:', error);
     res.status(500).json({ error: 'Failed to generate content from Gemini API' });
   }
 });
-
 
 
 // Start Server
