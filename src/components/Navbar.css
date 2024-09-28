@@ -1,0 +1,82 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color:black;
+  transition: top 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-visible {
+  top: 0;
+}
+
+.navbar-hidden {
+  top: -100px;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #f5f5f5;
+  text-decoration: none;
+}
+
+.navbar-logo-text {
+  margin-left: 0.5rem;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-nav-button {
+  color: #4fd1c5;
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-nav-button:hover {
+  background-color: #4a4a4a;
+  color: #f5f5f5;
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-action-button {
+  color: #f5f5f5;
+  background: none;
+  border: 1px solid #4fd1c5;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #4fd1c5;
+  color: #333;
+}
+
+.appointment-button {
+  background-color: #4fd1c5;
+  color: #333;
+}
+
+.appointment-button:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}

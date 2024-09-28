@@ -1,0 +1,237 @@
+:root {
+    --primary-color: #4fd1c5;
+    --primary-dark: #2563eb;
+    --secondary-color: rgb(17,24,39,1);
+    --text-color: black;
+    --background-color: #ffffff;
+    --error-color: #ef4444;
+    --success-color: #22c55e;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--secondary-color);
+  }
+  .afterfill{
+    font-size: 30px;
+    color: white;
+    border: 2px solid white;
+    height: 100px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+  }.spantext{
+    font-size: 15px;
+  }
+
+  .maindiv{
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .health-assessment-form {
+    margin-top: 10px;
+    margin-bottom: 100px;
+    width: 100%;
+    min-height: 80vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .card {
+    background-color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-header {
+    background-color: var(--primary-color);
+    color: black;
+    padding: 20px;
+    text-align: center;
+    line-height: 30px; 
+  }
+  
+  .card-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .card-description {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  
+  .card-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--secondary-color);
+    margin-bottom: 20px;
+    height: 50px; 
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: opacity 0.3s, border-bottom 0.3s;
+    height: 100%; /* Make tabs fit the container height */
+    line-height: 50px; /* Centering text vertically */
+  }
+  
+  .tab.active {
+    opacity: 1;
+    border-bottom: 2px solid var(--primary-color);
+  }
+  
+  .tab-content {
+    margin-top: 20px;
+    height: calc(100% - 50px); /* Adjust height to fit within the card */
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color);
+  }
+  
+  .icon-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .icon {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-color);
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    font-size: 16px;
+    height: 40px; /* Fixed height for input fields */
+    box-sizing: border-box;
+  }
+  
+  input[type="range"] {
+    width: 100%;
+  }
+  
+  .slider-value {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .card-footer {
+    background-color: white;
+    padding: 10px 20px 40px 20px;
+    text-align: center;
+    height: 80px; 
+  
+ 
+  }
+  
+  .progress-container {
+    margin-bottom: 40px;
+    
+  }
+  
+  .progress-bar {
+    height: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+  }
+  
+  .submit-button {
+    
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: black;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px; 
+  }
+  
+  .submit-button:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  @media (max-width: 600px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .tabs {
+      flex-wrap: wrap;
+    }
+  
+    .tab {
+      flex: 1 0 50%;
+      text-align: center;
+      padding: 10px;
+    }
+  }
+  
