@@ -5,7 +5,7 @@ import { Calendar, Clock, FileText, User, Activity, Bell, Settings, Heart, Dropl
 import { useNavigate } from "react-router-dom";
 import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const Component = () => <div>Chatbot Placeholder</div>;
+import Component from "./Chatbot";
 
 // Mocking the HealthContext
 const HealthContext = React.createContext({
