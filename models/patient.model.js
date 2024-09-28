@@ -1,202 +1,165 @@
-// const mongoose = require("mongoose");
-
-// const patientSchema = mongoose.Schema({
-//   userType: {
-//     type: String,
-//     default: "patient",
-//   },
-
-//   patientID: {
-//     type: Number,
-//     required: true,
-//   },
-
-//   patientName: {
-//     type: String,
-//   },
-
-//   mobile: {
-//     type: Number,
-//     minlength: 10,
-//   },
-
-//   email: {
-//     type: String,
-//   },
-
-//   password: {
-//     type: String,
-//     default: "password",
-    
-//   },
-
-//   age: {
-//     type: Number,
-//   },
-
-//   department: {
-//     type: String,
-//   },
-
-//   gender: {
-//     type: String,
-//   },
-
-//   bloodGroup: {
-//     type: String,
-//   },
-
-//   DOB: {
-//     type: String,
-//   },
-
-//   address: {
-//     type: String,
-//   },
-
-//   image: {
-//     type: String,
-//   },
-
-//   disease: {
-//     type: String,
-//   },
-
-//   details: {
-//     type: String,
-//   },
-
-//   admitted: {
-//     type: Boolean,
-//     default: true,
-//   },
-
-//   date: {
-//     type: Date,
-//   },
-
-//   docID: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "doctor",
-//   },
-
-// });
-
-// const PatientModel = mongoose.model("patient", patientSchema);
-
-// module.exports = { PatientModel };
 
 
-// const mongoose = require('mongoose');
-// const Schema = mongoose.Schema;
-
-// const patientSchema = new Schema({
-//   name: { type: String, required: true },
-//   dob: { type: Date, required: true },
-//   contactInfo: {
-//     phone: { type: String, required: true },
-//     email: { type: String, required: true }
-//   },
-//   address: { type: String },
-//   appointments: [
-//     {
-//       appointmentId: { type: Schema.Types.ObjectId, ref: 'Appointment' },
-//       date: { type: Date },
-//       doctorId: { type: Schema.Types.ObjectId, ref: 'Doctor' }
-//     }
-//   ],
-//   prescriptions: [
-//     { type: Schema.Types.ObjectId, ref: 'Prescription' }
-//   ],
-//   reports: [
-//     { type: Schema.Types.ObjectId, ref: 'Report' }
-//   ]
-// });
-
-// module.exports = mongoose.model('PatientModel', patientSchema);
 const mongoose = require("mongoose");
 
+// Define the patient schema
 const patientSchema = mongoose.Schema({
   userType: {
     type: String,
-    default: "patient",
+    default: "patient", // Default user type is 'patient'
   },
 
   patientID: {
     type: Number,
-    required: true,
+    required: true, // Patient ID is required
   },
 
   patientName: {
-    type: String,
+    type: String, // Name of the patient
   },
 
   mobile: {
     type: Number,
-    minlength: 10,
+    minlength: 10, // Mobile number must be at least 10 digits
   },
 
   email: {
-    type: String,
+    type: String, // Email of the patient
   },
 
   password: {
     type: String,
-    default: "password",
+    default: "password", // Default password is 'password'
   },
 
   age: {
-    type: Number,
-  },
-
-  department: {
-    type: String,
+    type: Number, // Age of the patient
   },
 
   gender: {
-    type: String,
+    type: String, // Gender of the patient
+  },
+
+  height: {
+    type: Number, // Height of the patient
+  },
+
+  weight: {
+    type: Number, // Weight of the patient
+  },
+
+  // Vital signs
+  bloodPressureSystolic: {
+    type: Number, // Systolic blood pressure
+  },
+
+  bloodPressureDiastolic: {
+    type: Number, // Diastolic blood pressure
+  },
+
+  heartRate: {
+    type: Number, // Heart rate of the patient
+  },
+
+  temperature: {
+    type: Number, // Body temperature
+  },
+
+  // Lifestyle information
+  smokingStatus: {
+    type: String, // Smoking status (e.g., smoker, non-smoker)
+  },
+
+  alcoholConsumption: {
+    type: String, // Alcohol consumption details
+  },
+
+  exerciseFrequency: {
+    type: Number, // Frequency of exercise per week
+  },
+
+  sleepHours: {
+    type: Number, // Average hours of sleep per night
+  },
+
+  stressLevel: {
+    type: Number, // Stress level on a scale (e.g., 1-10)
+  },
+
+  dietType: {
+    type: String, // Type of diet (e.g., vegetarian, non-vegetarian)
+  },
+
+  waterIntake: {
+    type: String, // Daily water intake (e.g., 2 liters)
+  },
+
+  chronicConditions: {
+    type: [String], // Array of chronic conditions (e.g., diabetes)
+  },
+
+  allergies: {
+    type: String, // Any known allergies
+  },
+
+  currentMedications: {
+    type: String, // Current medications being taken
+  },
+
+  familyHistory: {
+    type: String, // Family medical history
+  },
+
+  currentSymptoms: {
+    type: String, // Current symptoms reported by the patient
+  },
+
+  department: {
+    type: String, // Department the patient is associated with (e.g., cardiology)
   },
 
   bloodGroup: {
-    type: String,
+    type: String, // Blood group of the patient
   },
 
   DOB: {
-    type: String,
+    type: String, // Date of birth (can be changed to Date type)
   },
 
   address: {
-    type: String,
+    type: String, // Residential address of the patient
   },
 
   image: {
-    type: String,
+    type: String, // Path or URL to the patient's image
   },
 
   disease: {
-    type: String,
+    type: String, // Any diagnosed diseases
   },
 
   details: {
-    type: String,
+    type: String, // Additional details about the patient
   },
 
   admitted: {
     type: Boolean,
-    default: true,
+    default: true, // Indicates if the patient is currently admitted
   },
 
   date: {
-    type: Date,
+    type: Date, // Date of registration
   },
 
+  // Reference to the doctor assigned to the patient
   docID: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "doctor",
+    ref: "doctor", // Reference to the doctor model
   },
-
 });
 
+// Create a Patient model based on the patient schema
 const PatientModel = mongoose.model("patient", patientSchema);
 
+// Export the Patient model
 module.exports = { PatientModel };

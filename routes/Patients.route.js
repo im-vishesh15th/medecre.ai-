@@ -1,11 +1,14 @@
+
+
 const express = require("express");
-const { PatientModel } = require("../models/Patient.model");
+const { PatientModel } = require("../models/patient.model");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { ReportModel } = require("../models/Report.model");
 
 const router = express.Router();
 
+// Fetch all patients
 router.get("/", async (req, res) => {
   try {
     const patients = await PatientModel.find();
@@ -16,7 +19,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// This register route will be used when adding a patient via patient or doctor or admin
+// Register a new patient
 router.post("/register", async (req, res) => {
   const { email } = req.body;
   try {
@@ -35,15 +38,13 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// Patient login
 router.post("/login", async (req, res) => {
   const { patientID, password } = req.body;
   try {
     const patient = await PatientModel.findOne({ patientID, password });
-
     if (patient) {
-      const token = jwt.sign({ foo: "bar" }, process.env.key, {
-        expiresIn: "24h",
-      });
+      const token = jwt.sign({ foo: "bar" }, process.env.key, { expiresIn: "24h" });
       let email = patient.email;
       let report = await ReportModel.find({ email });
       res.send({
@@ -56,19 +57,19 @@ router.post("/login", async (req, res) => {
       res.send({ message: "Wrong credentials, Please try again." });
     }
   } catch (error) {
-    console.log({ message: "Error occurred, unable to Login." });
     console.log(error);
+    res.send({ message: "Error occurred, unable to Login." });
   }
 });
 
-// Only Admin should be able to update or delete patient
+// Update patient information (Admin only)
 router.patch("/:patientId", async (req, res) => {
   const id = req.params.patientId;
   const payload = req.body;
   try {
-    const patient = await PatientModel.findByIdAndUpdate({ _id: id }, payload);
-    if (!patient) {
-      res.status(404).send({ msg: `Patient with id ${id} not found` });
+    const updatedPatient = await PatientModel.findByIdAndUpdate(id, payload);
+    if (!updatedPatient) {
+      return res.status(404).send({ msg: `Patient with id ${id} not found` });
     }
     res.status(200).send(`Patient with id ${id} updated`);
   } catch (error) {
@@ -77,12 +78,13 @@ router.patch("/:patientId", async (req, res) => {
   }
 });
 
+// Delete a patient (Admin only)
 router.delete("/:patientId", async (req, res) => {
   const id = req.params.patientId;
   try {
-    const patient = await PatientModel.findByIdAndDelete({ _id: id });
-    if (!patient) {
-      res.status(404).send({ msg: `Patient with id ${id} not found` });
+    const deletedPatient = await PatientModel.findByIdAndDelete(id);
+    if (!deletedPatient) {
+      return res.status(404).send({ msg: `Patient with id ${id} not found` });
     }
     res.status(200).send(`Patient with id ${id} deleted`);
   } catch (error) {
@@ -91,4 +93,5 @@ router.delete("/:patientId", async (req, res) => {
   }
 });
 
+// Export the patient routes
 module.exports = router;

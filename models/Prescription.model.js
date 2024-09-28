@@ -1,163 +1,80 @@
-// const mongoose = require("mongoose");
 
-// const prescriptionSchema = mongoose.Schema({
-//   docName: {
-//     type: String,
-//     required: true,
-//   },
-
-//   hospital: {
-//     name: {
-//       type: String,
-//       required: true,
-//     },
-//     address: {
-//       street: {
-//         type: String,
-//         required: true,
-//       },
-//       city: {
-//         type: String,
-//         required: true,
-//       },
-//       state: {
-//         type: String,
-//         required: true,
-//       },
-//       pincode: {
-//         type: Number,
-//         required: true,
-//       },
-//     },
-//     phone: {
-//       type: Number,
-//       required: true,
-//       minlength: 11,
-//     },
-//   },
-
-//   medicines: {
-//     diagnosis: {
-//       type: String,
-//     },
-//     medicineName: {
-//       type: String,
-//       required: true,
-//     },
-//     type: {
-//       type: String,
-//       required: true,
-//     },
-//     dosage: {
-//       quantity: {
-//         type: Number,
-//         required: true,
-//       },
-//       duration: {
-//         type: Number,
-//         required: true,
-//       },
-//     },
-//   },
-
-// });
-
-// const PrescriptionModel = mongoose.model("prescription", prescriptionSchema);
-
-// module.exports = { PrescriptionModel, prescriptionSchema };
-
-// const mongoose = require('mongoose');
-// const Schema = mongoose.Schema;
-
-// const prescriptionSchema = new Schema({
-//   patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
-//   doctorId: { type: Schema.Types.ObjectId, ref: 'Doctor', required: true },
-//   date: { type: Date, required: true },
-//   medications: [
-//     {
-//       name: { type: String, required: true },
-//       dosage: { type: String, required: true }
-//     }
-//   ],
-//   notes: { type: String }
-// });
-
-// module.exports = mongoose.model('PrescriptionModel', prescriptionSchema);
 
 const mongoose = require("mongoose");
 
+// Define the prescription schema
 const prescriptionSchema = mongoose.Schema({
   docName: {
     type: String,
-    required: true,
+    required: true, // Doctor's name is required
   },
-
 
   hospital: {
     name: {
       type: String,
-      required: true,
+      required: true, // Hospital name is required
     },
     address: {
       street: {
         type: String,
-        required: true,
+        required: true, // Street address is required
       },
       city: {
         type: String,
-        required: true,
+        required: true, // City is required
       },
       state: {
         type: String,
-        required: true,
+        required: true, // State is required
       },
       pincode: {
         type: Number,
-        required: true,
+        required: true, // Pincode is required
       },
     },
     phone: {
       type: Number,
-      required: true,
-      minlength: 11,
+      required: true, // Phone number is required
+      minlength: 11, // Phone number must be at least 11 digits
     },
   },
 
   medicines: {
     diagnosis: {
-      type: String,
+      type: String, // Diagnosis details
     },
     medicineName: {
       type: String,
-      required: true,
+      required: true, // Medicine name is required
     },
     type: {
       type: String,
-      required: true,
+      required: true, // Type of medicine is required
     },
     dosage: {
       quantity: {
         type: Number,
-        required: true,
+        required: true, // Dosage quantity is required
       },
       duration: {
         type: Number,
-        required: true,
+        required: true, // Duration of medication is required
       },
     },
   },
 
   advice: {
-    type: String,
+    type: String, // Additional advice from the doctor
   },
 
   total: {
     type: Number,
-    required: true,
+    required: true, // Total cost of the prescription is required
   },
 });
 
+// Create a Prescription model based on the prescription schema
 const PrescriptionModel = mongoose.model("prescription", prescriptionSchema);
 
+// Export the Prescription model
 module.exports = { PrescriptionModel, prescriptionSchema };
-
