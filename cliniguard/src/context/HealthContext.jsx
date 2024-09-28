@@ -228,7 +228,7 @@ export const HealthProvider = ({ children }) => {
       
 
 
-      const aiinfo = async ( message) => {
+       const aiinfo = async ( message) => {
         try {
           const response = await fetch('http://localhost:5000/info', {
             method: 'POST',
@@ -245,8 +245,8 @@ export const HealthProvider = ({ children }) => {
           const data = await response.json();
           
           // Check if reply exists in the response
-          if (data && data.reply) {
-            return data.reply;
+          if (data ) {
+            return data;
           } else {
             throw new Error('No reply from server');
           }
@@ -256,6 +256,7 @@ export const HealthProvider = ({ children }) => {
           return 'Sorry, something went wrong. Please try again later.'; // Return a fallback message
         }
       };
+      
       
 
 
