@@ -14,11 +14,10 @@
 
 ## Tech Stack
 
-- **Frontend**: React, Next.js (v14.2.13)
+- **Frontend**: Reactjs
 - **Backend**: Node.js, Express
-- **Database**: Firebase, MongoDB
-- **AI Integration**: Python, TensorFlow
-- **Real-time Communication**: WebSockets, Firebase Firestore
+- **Database**: MongoDB
+- **Real-time Communication**: WebSockets
 
 ## Project Architecture
 
@@ -35,7 +34,7 @@
     ```
 2. Navigate to the project directory:
     ```bash
-    cd ClinicStream
+    cd cliniguard
     ```
 3. Install the dependencies:
     ```bash
@@ -50,10 +49,10 @@
 
 We are a team of passionate developers with expertise in full-stack development, AI, and healthcare technology:
 
-- **Team Lead**: Vishesh Gupta
+- **Lead**: Vishesh Gupta
 - **Backend Developer**: Shubham
 - **Frontend Developer**: Chayan Das
-- **AI Engineer**: Chayan Das
+
 
 ## Hackathon Journey
 
@@ -69,5 +68,3 @@ We participated in the Medecro HealthHack 2024 and successfully made it to the f
 
 For any queries or contributions, feel free to reach out:
 
-- **Email**: chayan8837@gmail.com
-- **GitHub**: [Chayan's GitHub Profile](https://github.com/Chayan8837)
