@@ -2,9 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import { HealthContext } from "../context/HealthContext"
 import { v4 as uuidv4 } from 'uuid'; // Import the uuid v4 method
 
-
-
-
 export default function Component() {
     const [sessionId,setsessionId]= useState(uuidv4())
     const {botchat}= useContext(HealthContext)
