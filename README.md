@@ -1,4 +1,4 @@
-# Medecro HealthHack 2024 Project - ClinicStream
+# Medecro HealthHack 2024 Project - CliniGuard
 
 ## Overview
 
