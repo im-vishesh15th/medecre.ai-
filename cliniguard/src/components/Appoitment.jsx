@@ -261,13 +261,18 @@ export default function ComprehensiveAppointmentPage() {
   const [symptomDescription, setSymptomDescription] = useState('');
   const [error, setError] = useState('');
 
-  const [infoDialogOpen, setInfoDialogOpen] = useState(false); // To control dialog visibility
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);// To control dialog visibility
+  
   const [diseaseInfo, setDiseaseInfo] = useState(''); // To store fetched info content
   const [selectedDiseaseName, setSelectedDiseaseName] = useState(''); // To store the name of the disease
 
 
   const handleDiseaseInfo = async (disease) => {
+    console.log(disease);
     // Fetch disease info (or mock it for now)
+    const data=await aiinfo(disease.Issue.Name);
+    console.log(data);
+    setDiseaseInfo(data)
     setSelectedDiseaseName(disease.Issue.Name); // Set the name of the disease
     setInfoDialogOpen(true); // Open the dialog
   };
@@ -614,30 +619,26 @@ export default function ComprehensiveAppointmentPage() {
               <div className="bg-teal-100 dark:bg-teal-800 p-4 rounded-lg">
                 <h3 className="font-semibold text-lg mb-2 text-teal-800 dark:text-teal-200">Home Remedies:</h3>
                 <ul className="list-disc pl-5 text-teal-700 dark:text-teal-300">
-                  <li>Rest and sleep</li>
+                  {/* <li>Rest and sleep</li>
                   <li>Stay hydrated with water and warm liquids</li>
                   <li>Gargle with salt water</li>
                   <li>Use a humidifier</li>
-                  <li>Try over-the-counter pain relievers</li>
+                  <li>Try over-the-counter pain relievers</li> */}
+                      <div dangerouslySetInnerHTML={{ __html: diseaseInfo.reply1.substring(7,diseaseInfo.reply1.length-3) }} />
+
                 </ul>
               </div>
               <div className="bg-blue-100 dark:bg-blue-800 p-4 rounded-lg">
                 <h3 className="font-semibold text-lg mb-2 text-blue-800 dark:text-blue-200">Diet Suggestions:</h3>
                 <ul className="list-disc pl-5 text-blue-700 dark:text-blue-300">
-                  <li>Chicken soup</li>
-                  <li>Citrus fruits high in Vitamin C</li>
-                  <li>Ginger tea with honey</li>
-                  <li>Garlic</li>
-                  <li>Yogurt with probiotics</li>
+                <div dangerouslySetInnerHTML={{ __html: diseaseInfo.reply2.substring(7,diseaseInfo.reply2.length-3) }} />
                 </ul>
               </div>
               <div className="bg-red-100 dark:bg-red-900 p-4 rounded-lg">
                 <h3 className="font-semibold text-lg mb-2 text-red-800 dark:text-red-200">When to See a Doctor:</h3>
                 <p className="text-red-700 dark:text-red-300 flex items-start">
                   <AlertTriangle className="inline mr-2 flex-shrink-0" size={20} />
-                  <span>
-                    It's generally not necessary to see a doctor for a {selectedDiseaseName.toLowerCase()} unless symptoms persist for more than 10 days or become severe. However, consult a doctor if you experience high fever, severe pain, or difficulty breathing.
-                  </span>
+                  <div dangerouslySetInnerHTML={{ __html: diseaseInfo.reply3.substring(7,diseaseInfo.reply3.length-3) }} />
                 </p>
               </div>
             </div>
