@@ -465,7 +465,7 @@ export default function ComprehensiveAppointmentPage() {
             <div style={styles.inputGroup}>
               <Mail style={styles.icon} />
               <input
-                type="email"
+                type="text"
                 placeholder="Email Address"
                 value={patientDetails.email}
                 onChange={(e) => setPatientDetails({ ...patientDetails, email: e.target.value })}
