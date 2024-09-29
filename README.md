@@ -30,7 +30,7 @@
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Chayan8837/ClinicStream.git
+    git clone  https://github.com/im-vishesh15th/medecre.ai-.git
     ```
 2. Navigate to the project directory:
     ```bash
